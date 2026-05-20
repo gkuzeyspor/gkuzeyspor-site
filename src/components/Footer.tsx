@@ -73,7 +73,7 @@ export default function Footer() {
 
         {/* Divider + copyright */}
         <div className="border-t border-white/5 pt-7 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-[11px] tracking-[0.18em] text-white/25">
+          <p className="text-[11px] tracking-[0.18em] text-white/55">
             © 2026 Gerçek Kuzey Spor Kulübü. Tüm hakları saklıdır.
           </p>
           <div className="w-16 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
