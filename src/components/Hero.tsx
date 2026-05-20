@@ -9,10 +9,7 @@ export default function Hero() {
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-navy-deep via-navy-dark to-navy-mid" />
-
-      {/* Grid pattern */}
       <div
         className="absolute inset-0 opacity-[0.04]"
         style={{
@@ -21,45 +18,37 @@ export default function Hero() {
           backgroundSize: "72px 72px",
         }}
       />
-
-      {/* Radial glows */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_85%_65%_at_50%_38%,rgba(13,59,122,0.45)_0%,transparent_68%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_100%,rgba(5,13,26,0.9)_0%,transparent_55%)]" />
 
-      {/* Content */}
       <div className="relative z-10 text-center px-6 flex flex-col items-center">
         {/* Logo */}
-        <div className="mb-8 md:mb-10 hero-logo-anim mix-blend-multiply">
+        <div className="mb-8 md:mb-10 hero-logo-anim">
           <Image
-            src="/logo.jpg"
+            src="/logo.png"
             alt="Gerçek Kuzey Spor Kulübü"
             width={260}
             height={260}
-            className="object-contain mx-auto w-[180px] sm:w-[220px] md:w-[260px]"
+            className="object-contain mx-auto w-[180px] sm:w-[220px] md:w-[260px] drop-shadow-2xl"
             priority
           />
         </div>
 
-        {/* Eyebrow */}
         <p className="hero-item-1 text-[10px] font-bold tracking-[0.5em] uppercase text-gold mb-4">
           Türkiye &nbsp;·&nbsp; Amatör Spor Kulübü
         </p>
 
-        {/* Title */}
         <h1 className="hero-item-2 font-cinzel font-black uppercase text-white mb-3 text-[28px] sm:text-[36px] md:text-[52px] lg:text-[64px] leading-[1.05] tracking-[0.05em]">
           Gerçek Kuzey
           <span className="block text-gold">Spor Kulübü</span>
         </h1>
 
-        {/* Divider */}
         <div className="hero-item-3 w-20 h-px bg-gradient-to-r from-transparent via-gold to-transparent my-5" />
 
-        {/* Subtitle */}
         <p className="hero-item-4 text-sm md:text-base font-light text-white/60 max-w-xl leading-relaxed mb-10">
           Disiplin, takım ruhu ve fair play anlayışıyla sporun birleştirici gücünü yaşatıyoruz.
         </p>
 
-        {/* CTA buttons */}
         <div className="hero-item-5 flex flex-col sm:flex-row gap-4">
           <button
             onClick={() => scrollTo("hakkimizda")}
@@ -76,7 +65,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll hint */}
       <div className="hero-scroll absolute bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
         <div className="w-5 h-8 border border-white/20 rounded-full flex justify-center pt-1.5">
           <div className="w-0.5 h-1.5 bg-gold rounded scroll-dot-anim" />

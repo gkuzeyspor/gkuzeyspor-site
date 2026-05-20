@@ -14,15 +14,14 @@ export default function Footer() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
 
-          {/* Brand */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3">
               <Image
-                src="/logo.jpg"
+                src="/logo.png"
                 alt="Gerçek Kuzey Spor Kulübü"
                 width={48}
                 height={48}
-                className="object-contain opacity-90 mix-blend-multiply brightness-125"
+                className="object-contain"
               />
               <div className="flex flex-col leading-tight">
                 <span className="font-cinzel text-sm font-bold tracking-[0.13em] uppercase text-white/80">
@@ -38,7 +37,6 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Quick links */}
           <div>
             <h4 className="font-cinzel font-bold text-xs tracking-[0.2em] uppercase text-white/60 mb-5">
               Hızlı Erişim
@@ -57,7 +55,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
             <h4 className="font-cinzel font-bold text-xs tracking-[0.2em] uppercase text-white/60 mb-5">
               İletişim
@@ -71,7 +68,6 @@ export default function Footer() {
 
         </div>
 
-        {/* Divider + copyright */}
         <div className="border-t border-white/5 pt-7 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-[11px] tracking-[0.18em] text-white/55">
             © 2026 Gerçek Kuzey Spor Kulübü. Tüm hakları saklıdır.

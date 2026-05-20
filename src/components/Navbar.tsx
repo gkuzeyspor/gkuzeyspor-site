@@ -11,8 +11,8 @@ const links = [
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled]   = useState(false);
-  const [menuOpen, setMenuOpen]   = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 55);
@@ -35,7 +35,6 @@ export default function Navbar() {
             : "bg-transparent py-4 px-6 md:px-14"
           }`}
       >
-        {/* Logo + brand */}
         <a
           href="#hero"
           onClick={(e) => handleLink(e, "#hero")}
@@ -43,17 +42,15 @@ export default function Navbar() {
           aria-label="Gerçek Kuzey Spor Kulübü - Anasayfa"
         >
           <Image
-            src="/logo.jpg"
+            src="/logo.png"
             alt="Gerçek Kuzey Spor Kulübü"
             width={44}
             height={44}
-            className="object-contain mix-blend-multiply"
+            className="object-contain"
             priority
           />
           <div className="flex flex-col leading-tight">
-            <span
-              className="font-cinzel text-[13px] font-bold tracking-[0.14em] uppercase text-gold"
-            >
+            <span className="font-cinzel text-[13px] font-bold tracking-[0.14em] uppercase text-gold">
               Gerçek Kuzey
             </span>
             <span className="text-[9px] font-medium tracking-[0.32em] uppercase text-white/40">
@@ -62,7 +59,6 @@ export default function Navbar() {
           </div>
         </a>
 
-        {/* Desktop nav */}
         <ul className="hidden md:flex items-center gap-9 list-none">
           {links.map((l) => (
             <li key={l.href}>
@@ -80,7 +76,6 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Hamburger */}
         <button
           className="md:hidden flex flex-col gap-1.5 p-1"
           onClick={() => setMenuOpen(true)}
@@ -92,7 +87,6 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile overlay */}
       {menuOpen && (
         <div className="fixed inset-0 z-[60] bg-navy-deep/98 backdrop-blur-md flex flex-col items-center justify-center gap-10">
           <button
