@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerçek Kuzey Spor Kulübü</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy-deep:  #050d1a;
+      --navy-dark:  #0a1628;
+      --navy-mid:   #1a2a4a;
+      --navy-light: #0d3b7a;
+      --gold:       #c9a84c;
+      --gold-light: #e8c96a;
+      --gold-dim:   #8a6e30;
+      --white:      #ffffff;
+      --white-dim:  rgba(255,255,255,0.65);
+      --white-faint:rgba(255,255,255,0.06);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      background: var(--navy-dark);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ─────────────────────────────────────────── */
+    .navbar {
+      position: fixed; top:0; left:0; right:0; z-index:1000;
+      padding: 16px 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: all .4s ease;
+    }
+    .navbar.scrolled {
+      background: rgba(5,13,26,.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(201,168,76,.18);
+      padding: 11px 56px;
+    }
+
+    .nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+    .nav-logo img {
+      height: 46px; width:auto;
+      filter: drop-shadow(0 0 8px rgba(201,168,76,.4));
+      transition: filter .3s;
+    }
+    .nav-logo:hover img { filter: drop-shadow(0 0 16px rgba(201,168,76,.75)); }
+
+    .nav-brand { display:flex; flex-direction:column; line-height:1.2; }
+    .nav-brand-main {
+      font-family: 'Cinzel', serif; font-size:13px; font-weight:700;
+      color: var(--gold); letter-spacing:.15em; text-transform:uppercase;
+    }
+    .nav-brand-sub {
+      font-size:9px; font-weight:500;
+      color: rgba(255,255,255,.45); letter-spacing:.35em; text-transform:uppercase;
+    }
+
+    .nav-links { display:flex; align-items:center; gap:38px; list-style:none; }
+    .nav-links a {
+      font-size:11px; font-weight:700; color: var(--white-dim);
+      text-decoration:none; letter-spacing:.22em; text-transform:uppercase;
+      position:relative; padding-bottom:4px; transition: color .3s;
+    }
+    .nav-links a::after {
+      content:''; position:absolute; bottom:0; left:0;
+      width:0; height:1px; background:var(--gold); transition:width .35s ease;
+    }
+    .nav-links a:hover { color:var(--gold); }
+    .nav-links a:hover::after { width:100%; }
+
+    .hamburger {
+      display:none; flex-direction:column; gap:5px;
+      cursor:pointer; padding:4px;
+    }
+    .hamburger span { display:block; width:24px; height:2px; background:var(--gold); transition:all .3s; }
+
+    /* ── MOBILE MENU ─────────────────────────────────────── */
+    .mobile-menu {
+      display:none; position:fixed; inset:0;
+      background:rgba(5,13,26,.98); backdrop-filter:blur(16px);
+      z-index:999; flex-direction:column; align-items:center; justify-content:center; gap:44px;
+    }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu a {
+      font-family:'Cinzel',serif; font-size:22px; font-weight:600;
+      color:rgba(255,255,255,.7); text-decoration:none;
+      letter-spacing:.2em; text-transform:uppercase; transition:color .3s;
+    }
+    .mobile-menu a:hover { color:var(--gold); }
+    .mobile-close {
+      position:absolute; top:24px; right:28px;
+      background:none; border:none; color:var(--gold); font-size:28px; cursor:pointer;
+    }
+
+    /* ── HERO ────────────────────────────────────────────── */
+    #hero {
+      min-height:100vh; position:relative;
+      display:flex; align-items:center; justify-content:center; overflow:hidden;
+    }
+    .hero-bg {
+      position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 90% 70% at 50% 38%, rgba(13,59,122,.55) 0%, transparent 68%),
+        radial-gradient(ellipse 100% 60% at 50% 100%, rgba(5,13,26,.95) 0%, transparent 55%),
+        linear-gradient(155deg, #050d1a 0%, #0a1628 38%, #0c1e3c 65%, #050d1a 100%);
+    }
+    .hero-grid {
+      position:absolute; inset:0; opacity:.045;
+      background-image:
+        linear-gradient(rgba(201,168,76,.5) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,.5) 1px, transparent 1px);
+      background-size: 72px 72px;
+    }
+    .hero-vignette {
+      position:absolute; inset:0;
+      background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 50%, rgba(5,13,26,.7) 100%);
+    }
+    canvas#stars {
+      position:absolute; inset:0; pointer-events:none;
+    }
+
+    .hero-content {
+      position:relative; z-index:2; text-align:center;
+      padding:0 24px; display:flex; flex-direction:column; align-items:center;
+    }
+    .hero-logo {
+      width: min(280px, 52vw); height:auto; margin-bottom:36px;
+      filter: drop-shadow(0 0 50px rgba(201,168,76,.55)) drop-shadow(0 0 100px rgba(13,59,122,.7));
+      animation: logoIn 1.2s cubic-bezier(0.23,1,.32,1) forwards, logoFloat 7s ease-in-out 1.2s infinite;
+      opacity:0;
+    }
+    @keyframes logoIn {
+      from { opacity:0; transform:translateY(28px) scale(.94); }
+      to   { opacity:1; transform:translateY(0) scale(1); }
+    }
+    @keyframes logoFloat {
+      0%,100% { transform:translateY(0); }
+      50%      { transform:translateY(-9px); }
+    }
+
+    .hero-eyebrow {
+      font-size:10px; font-weight:700; letter-spacing:.55em;
+      color:var(--gold); text-transform:uppercase; margin-bottom:14px;
+      opacity:0; animation: fadeUp .7s ease .85s forwards;
+    }
+    .hero-title {
+      font-family:'Cinzel',serif;
+      font-size: clamp(30px, 5.5vw, 68px);
+      font-weight:900; color:var(--white);
+      letter-spacing:.07em; text-transform:uppercase; line-height:1.08;
+      margin-bottom:10px;
+      opacity:0; animation: fadeUp .7s ease 1.05s forwards;
+    }
+    .hero-title em {
+      font-style:normal; color:var(--gold); display:block;
+    }
+    .hero-rule {
+      width:80px; height:2px;
+      background:linear-gradient(90deg,transparent,var(--gold),transparent);
+      margin:0 auto 22px;
+      opacity:0; animation:fadeIn .8s ease 1.15s forwards;
+    }
+    .hero-subtitle {
+      font-size: clamp(11px,1.6vw,14px); font-weight:500;
+      color:rgba(255,255,255,.5); letter-spacing:.4em;
+      text-transform:uppercase; margin-bottom:48px;
+      opacity:0; animation: fadeUp .7s ease 1.25s forwards;
+    }
+    .hero-cta {
+      display:inline-flex; align-items:center; gap:10px;
+      padding:15px 42px;
+      border:1px solid var(--gold); color:var(--gold);
+      font-size:11px; font-weight:800; letter-spacing:.3em; text-transform:uppercase;
+      text-decoration:none; position:relative; overflow:hidden;
+      transition:color .38s ease; cursor:pointer;
+      opacity:0; animation: fadeUp .7s ease 1.45s forwards;
+    }
+    .hero-cta::before {
+      content:''; position:absolute; inset:0;
+      background:var(--gold); transform:translateX(-101%); transition:transform .38s ease;
+    }
+    .hero-cta:hover { color:var(--navy-dark); }
+    .hero-cta:hover::before { transform:translateX(0); }
+    .hero-cta span { position:relative; z-index:1; }
+
+    .scroll-hint {
+      position:absolute; bottom:28px; left:50%; transform:translateX(-50%);
+      display:flex; flex-direction:column; align-items:center; gap:8px;
+      opacity:0; animation:fadeIn 1s ease 2.2s forwards;
+    }
+    .scroll-hint span {
+      font-size:8px; letter-spacing:.45em; color:rgba(255,255,255,.3); text-transform:uppercase;
+    }
+    .scroll-mouse {
+      width:21px; height:34px; border:1px solid rgba(255,255,255,.22);
+      border-radius:11px; display:flex; justify-content:center; padding-top:6px;
+    }
+    .scroll-dot {
+      width:3px; height:7px; background:var(--gold); border-radius:2px;
+      animation:dotScroll 2s ease-in-out infinite;
+    }
+    @keyframes dotScroll {
+      0%,100% { transform:translateY(0); opacity:1; }
+      80%      { transform:translateY(9px); opacity:0; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(18px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity:0; } to { opacity:1; }
+    }
+
+    /* ── SECTION COMMONS ─────────────────────────────────── */
+    section { padding: 108px 0; }
+    .container { max-width:1180px; margin:0 auto; padding:0 52px; }
+
+    .sec-label {
+      font-size:10px; font-weight:700; letter-spacing:.5em;
+      color:var(--gold); text-transform:uppercase; margin-bottom:12px;
+    }
+    .sec-title {
+      font-family:'Cinzel',serif;
+      font-size: clamp(24px,3.6vw,44px);
+      font-weight:700; color:var(--white);
+      letter-spacing:.04em; text-transform:uppercase; line-height:1.15; margin-bottom:14px;
+    }
+    .sec-rule {
+      width:56px; height:2px;
+      background:linear-gradient(90deg,var(--gold),transparent);
+      margin-bottom:48px;
+    }
+
+    /* scroll-reveal */
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+    .reveal.in  { opacity:1; transform:translateY(0); }
+    .d1 { transition-delay:.1s; } .d2 { transition-delay:.2s; }
+    .d3 { transition-delay:.3s; } .d4 { transition-delay:.4s; }
+    .d5 { transition-delay:.5s; } .d6 { transition-delay:.6s; }
+
+    /* ── HAKKIMIZDA ──────────────────────────────────────── */
+    #hakkimizda {
+      background:var(--navy-dark); position:relative; overflow:hidden;
+    }
+    #hakkimizda::after {
+      content:''; position:absolute;
+      top:-220px; right:-220px; width:640px; height:640px; border-radius:50%;
+      background:radial-gradient(circle,rgba(13,59,122,.22) 0%,transparent 70%);
+      pointer-events:none;
+    }
+
+    .about-grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start;
+    }
+    .about-body p {
+      font-size:15px; line-height:1.95; color:rgba(255,255,255,.58); margin-bottom:18px;
+    }
+    .about-body p strong { color:var(--gold); font-weight:600; }
+    .about-quote {
+      margin-top:32px; padding:22px 26px;
+      border-left:2px solid var(--gold);
+      background:rgba(201,168,76,.04);
+    }
+    .about-quote p {
+      font-family:'Cinzel',serif; font-size:14px !important; font-style:italic;
+      color:rgba(255,255,255,.78) !important; line-height:1.75 !important; margin:0 !important;
+    }
+
+    .stats-col { display:flex; flex-direction:column; gap:18px; }
+    .stat-card {
+      padding:30px 28px;
+      background:rgba(255,255,255,.025); border:1px solid rgba(201,168,76,.1);
+      position:relative; overflow:hidden; transition:all .4s ease;
+    }
+    .stat-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg,var(--gold),transparent); opacity:0; transition:opacity .4s;
+    }
+    .stat-card:hover {
+      background:rgba(201,168,76,.06); border-color:rgba(201,168,76,.35);
+      transform:translateX(5px);
+    }
+    .stat-card:hover::before { opacity:1; }
+    .stat-num {
+      font-family:'Cinzel',serif; font-size:52px; font-weight:900;
+      color:var(--gold); line-height:1; margin-bottom:6px;
+    }
+    .stat-num sup { font-size:28px; }
+    .stat-lbl {
+      font-size:10px; font-weight:700; letter-spacing:.32em;
+      color:rgba(255,255,255,.5); text-transform:uppercase;
+    }
+
+    /* ── BRANŞLARIMIZ ────────────────────────────────────── */
+    #branslar {
+      background:var(--navy-deep); position:relative;
+    }
+    #branslar::before {
+      content:''; position:absolute; inset:0;
+      background-image:repeating-linear-gradient(
+        -45deg, transparent, transparent 38px,
+        rgba(255,255,255,.007) 38px, rgba(255,255,255,.007) 39px
+      );
+    }
+    .branslar-head { text-align:center; margin-bottom:60px; }
+    .branslar-head .sec-rule { margin:0 auto 48px; }
+
+    .branches-grid {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:22px;
+    }
+    .branch-card {
+      padding:40px 28px 36px; text-align:center;
+      background:rgba(255,255,255,.022); border:1px solid rgba(255,255,255,.055);
+      position:relative; overflow:hidden; cursor:default;
+      transition:all .45s cubic-bezier(.23,1,.32,1);
+    }
+    .branch-card::after {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(135deg,rgba(201,168,76,.07) 0%,transparent 60%);
+      opacity:0; transition:opacity .45s;
+    }
+    .branch-card:hover {
+      border-color:rgba(201,168,76,.42); transform:translateY(-7px);
+      background:rgba(201,168,76,.05);
+      box-shadow:0 22px 60px rgba(0,0,0,.45), 0 0 0 1px rgba(201,168,76,.12);
+    }
+    .branch-card:hover::after { opacity:1; }
+
+    .bc-num {
+      position:absolute; top:12px; right:18px;
+      font-family:'Cinzel',serif; font-size:52px; font-weight:900;
+      color:rgba(255,255,255,.025); line-height:1; transition:color .4s;
+    }
+    .branch-card:hover .bc-num { color:rgba(201,168,76,.05); }
+
+    .bc-icon {
+      font-size:46px; margin-bottom:18px; display:block; position:relative; z-index:1;
+      transition:transform .4s ease;
+    }
+    .branch-card:hover .bc-icon { transform:scale(1.14); }
+
+    .bc-name {
+      font-family:'Cinzel',serif; font-size:15px; font-weight:700;
+      color:var(--white); letter-spacing:.1em; text-transform:uppercase;
+      margin-bottom:11px; position:relative; z-index:1;
+    }
+    .bc-desc {
+      font-size:12px; color:rgba(255,255,255,.45); line-height:1.75;
+      position:relative; z-index:1;
+    }
+
+    /* ── İLETİŞİM ────────────────────────────────────────── */
+    #iletisim { background:var(--navy-dark); position:relative; }
+    #iletisim::before {
+      content:''; position:absolute;
+      bottom:-180px; left:-180px; width:560px; height:560px; border-radius:50%;
+      background:radial-gradient(circle,rgba(13,59,122,.18) 0%,transparent 70%);
+      pointer-events:none;
+    }
+
+    .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+
+    .contact-form { display:flex; flex-direction:column; gap:20px; }
+    .form-group { display:flex; flex-direction:column; gap:8px; }
+    .form-group label {
+      font-size:10px; font-weight:700; letter-spacing:.3em;
+      color:var(--gold); text-transform:uppercase;
+    }
+    .form-group input,
+    .form-group textarea {
+      background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.09);
+      padding:13px 18px; color:var(--white);
+      font-family:'Raleway',sans-serif; font-size:14px; outline:none;
+      transition:all .3s; -webkit-appearance:none; border-radius:0;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color:rgba(255,255,255,.22); }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color:rgba(201,168,76,.5); background:rgba(201,168,76,.04);
+    }
+    .form-group textarea { min-height:138px; resize:vertical; }
+
+    .submit-btn {
+      align-self:flex-start; padding:15px 44px;
+      background:var(--gold); border:none; color:var(--navy-dark);
+      font-family:'Raleway',sans-serif; font-size:11px; font-weight:800;
+      letter-spacing:.32em; text-transform:uppercase;
+      cursor:pointer; position:relative; overflow:hidden; transition:color .32s;
+    }
+    .submit-btn::before {
+      content:''; position:absolute; inset:0;
+      background:var(--navy-dark); transform:translateY(101%); transition:transform .32s ease;
+    }
+    .submit-btn:hover { color:var(--gold); }
+    .submit-btn:hover::before { transform:translateY(0); }
+    .submit-btn span { position:relative; z-index:1; }
+
+    .contact-side { padding-top:6px; }
+    .cs-title {
+      font-family:'Cinzel',serif; font-size:19px; font-weight:700;
+      color:var(--white); letter-spacing:.05em; margin-bottom:8px;
+    }
+    .cs-desc {
+      font-size:14px; color:rgba(255,255,255,.48); line-height:1.75; margin-bottom:38px;
+    }
+    .ci {
+      display:flex; align-items:flex-start; gap:16px;
+      padding:18px 20px; margin-bottom:16px;
+      background:rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.05);
+      transition:all .3s;
+    }
+    .ci:hover { border-color:rgba(201,168,76,.2); background:rgba(201,168,76,.04); }
+    .ci-icon { font-size:20px; flex-shrink:0; margin-top:1px; }
+    .ci-lbl {
+      font-size:9px; font-weight:700; letter-spacing:.35em;
+      color:var(--gold); text-transform:uppercase; margin-bottom:4px;
+    }
+    .ci-val { font-size:14px; color:rgba(255,255,255,.7); line-height:1.5; }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    footer {
+      background:var(--navy-deep);
+      border-top:1px solid rgba(201,168,76,.1);
+      padding:52px 0 36px;
+    }
+    .footer-inner {
+      display:flex; flex-direction:column; align-items:center; gap:22px;
+    }
+    .footer-inner img {
+      height:60px; width:auto; opacity:.65; filter:grayscale(.25);
+      transition:all .3s;
+    }
+    .footer-inner img:hover { opacity:1; filter:grayscale(0); }
+    .footer-rule {
+      width:110px; height:1px;
+      background:linear-gradient(90deg,transparent,rgba(201,168,76,.38),transparent);
+    }
+    .footer-copy {
+      font-size:11px; font-weight:500; letter-spacing:.2em;
+      color:rgba(255,255,255,.28); text-align:center;
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────────── */
+    @media(max-width:1024px) {
+      .about-grid, .contact-grid { grid-template-columns:1fr; gap:52px; }
+      .stats-col { flex-direction:row; }
+      .stat-card { flex:1; }
+    }
+    @media(max-width:768px) {
+      .navbar, .navbar.scrolled { padding:13px 24px; }
+      .nav-links { display:none; }
+      .hamburger { display:flex; }
+      .container { padding:0 22px; }
+      section { padding:80px 0; }
+      .branches-grid { grid-template-columns:repeat(2,1fr); }
+      .stats-col { flex-direction:column; }
+    }
+    @media(max-width:480px) {
+      .branches-grid { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar" id="navbar">
+  <a href="#hero" class="nav-logo">
+    <img src="bc6dec2d-4726-43c7-bfe6-c31b402aaa7e.jpg" alt="Gerçek Kuzey SK">
+    <div class="nav-brand">
+      <span class="nav-brand-main">Gerçek Kuzey</span>
+      <span class="nav-brand-sub">Spor Kulübü</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#hero">Anasayfa</a></li>
+    <li><a href="#hakkimizda">Hakkımızda</a></li>
+    <li><a href="#branslar">Branşlarımız</a></li>
+    <li><a href="#iletisim">İletişim</a></li>
+  </ul>
+  <div class="hamburger" id="burger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ── MOBİL MENÜ ── -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMenu()">✕</button>
+  <a href="#hero"        onclick="toggleMenu()">Anasayfa</a>
+  <a href="#hakkimizda" onclick="toggleMenu()">Hakkımızda</a>
+  <a href="#branslar"   onclick="toggleMenu()">Branşlarımız</a>
+  <a href="#iletisim"   onclick="toggleMenu()">İletişim</a>
+</div>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-vignette"></div>
+  <canvas id="stars"></canvas>
+
+  <div class="hero-content">
+    <img src="bc6dec2d-4726-43c7-bfe6-c31b402aaa7e.jpg" alt="Gerçek Kuzey Spor Kulübü" class="hero-logo">
+    <p class="hero-eyebrow">Türkiye &nbsp;·&nbsp; Amatör Spor Kulübü</p>
+    <h1 class="hero-title">
+      Gerçek Kuzey<em>Spor Kulübü</em>
+    </h1>
+    <div class="hero-rule"></div>
+    <p class="hero-subtitle">19 Mayıs 2011'den Bu Yana</p>
+    <a href="#hakkimizda" class="hero-cta"><span>Kulübü Keşfet</span></a>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-mouse"><div class="scroll-dot"></div></div>
+    <span>Kaydır</span>
+  </div>
+</section>
+
+<!-- ── HAKKIMIZDA ── -->
+<section id="hakkimizda">
+  <div class="container">
+    <div class="about-grid">
+
+      <div>
+        <p class="sec-label reveal">Hakkımızda</p>
+        <h2 class="sec-title reveal">Şampiyonluk<br>Tutkuyla Gelir</h2>
+        <div class="sec-rule reveal"></div>
+        <div class="about-body reveal">
+          <p>
+            <strong>Gerçek Kuzey Spor Kulübü</strong>, 19 Mayıs 2011 tarihinde kurulan ve o günden bu yana sporseverleri bir araya getiren köklü bir amatör spor kulübüdür.
+          </p>
+          <p>
+            Kulübümüz; disiplin, dayanışma ve spor ahlakı ilkeleri doğrultusunda hareket ederek her yaştan ve her seviyeden sporcuya kapılarını açmaktadır.
+          </p>
+          <p>
+            Sahadan pistte, havuzdan salona kadar geniş bir yelpazede faaliyet gösteren kulübümüz, genç yetenekleri keşfederek Türk sporunun geleceğine katkı sağlamayı amaçlamaktadır.
+          </p>
+          <div class="about-quote">
+            <p>"Kuzey yıldızı gibi: sabit, güvenilir ve yol gösterici. Her sporcumuzun hayalini gerçeğe dönüştürmek için buradayız."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-col">
+        <div class="stat-card reveal d1">
+          <div class="stat-num">2011</div>
+          <div class="stat-lbl">Kuruluş Yılı</div>
+        </div>
+        <div class="stat-card reveal d2">
+          <div class="stat-num">500<sup>+</sup></div>
+          <div class="stat-lbl">Aktif Üye</div>
+        </div>
+        <div class="stat-card reveal d3">
+          <div class="stat-num">48</div>
+          <div class="stat-lbl">Şampiyonluk Kupası</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── BRANŞLARIMIZ ── -->
+<section id="branslar">
+  <div class="container">
+    <div class="branslar-head">
+      <p class="sec-label reveal">Branşlarımız</p>
+      <h2 class="sec-title reveal">Sporda Her Alan,<br>Her Yetenek</h2>
+      <div class="sec-rule reveal"></div>
+    </div>
+
+    <div class="branches-grid">
+      <div class="branch-card reveal d1">
+        <span class="bc-num">01</span>
+        <span class="bc-icon">⚽</span>
+        <div class="bc-name">Futbol</div>
+        <p class="bc-desc">Takım ruhunu ve rekabeti en yüksek seviyede yaşatan branşımız.</p>
+      </div>
+      <div class="branch-card reveal d2">
+        <span class="bc-num">02</span>
+        <span class="bc-icon">🏀</span>
+        <div class="bc-name">Basketbol</div>
+        <p class="bc-desc">Strateji ve hızın buluştuğu, her pozisyonda farklı yetenekler gerektiren branşımız.</p>
+      </div>
+      <div class="branch-card reveal d3">
+        <span class="bc-num">03</span>
+        <span class="bc-icon">🏐</span>
+        <div class="bc-name">Voleybol</div>
+        <p class="bc-desc">Koordinasyon ve takım uyumunun ön plana çıktığı dinamik branşımız.</p>
+      </div>
+      <div class="branch-card reveal d4">
+        <span class="bc-num">04</span>
+        <span class="bc-icon">🏊</span>
+        <div class="bc-name">Yüzme</div>
+        <p class="bc-desc">Her yaştan sporcunun katılabildiği, dayanıklılığı geliştiren temel branşımız.</p>
+      </div>
+      <div class="branch-card reveal d5">
+        <span class="bc-num">05</span>
+        <span class="bc-icon">🏃</span>
+        <div class="bc-name">Atletizm</div>
+        <p class="bc-desc">Hız, güç ve dayanıklılığı tek çatı altında buluşturan olimpik branşımız.</p>
+      </div>
+      <div class="branch-card reveal d6">
+        <span class="bc-num">06</span>
+        <span class="bc-icon">🤼</span>
+        <div class="bc-name">Güreş</div>
+        <p class="bc-desc">Türk sporunun köklü geleneğini yaşatan ve sürdüren kadim branşımız.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── İLETİŞİM ── -->
+<section id="iletisim">
+  <div class="container">
+    <div class="contact-grid">
+
+      <div>
+        <p class="sec-label reveal">İletişim</p>
+        <h2 class="sec-title reveal">Bizimle<br>İletişime Geç</h2>
+        <div class="sec-rule reveal"></div>
+        <form class="contact-form reveal" onsubmit="handleForm(event)">
+          <div class="form-group">
+            <label for="cname">Ad Soyad</label>
+            <input type="text" id="cname" placeholder="Adınızı ve soyadınızı girin" required>
+          </div>
+          <div class="form-group">
+            <label for="cemail">E-Posta</label>
+            <input type="email" id="cemail" placeholder="ornek@mail.com" required>
+          </div>
+          <div class="form-group">
+            <label for="cmsg">Mesajınız</label>
+            <textarea id="cmsg" placeholder="Mesajınızı buraya yazın…" required></textarea>
+          </div>
+          <button type="submit" class="submit-btn"><span>Gönder</span></button>
+        </form>
+      </div>
+
+      <div class="contact-side reveal d2">
+        <div class="cs-title">Bize Ulaşın</div>
+        <p class="cs-desc">
+          Kulübümüze üye olmak, etkinliklerimiz hakkında bilgi almak veya herhangi bir konuda destek için bizimle iletişime geçebilirsiniz.
+        </p>
+        <div class="ci">
+          <span class="ci-icon">📍</span>
+          <div>
+            <div class="ci-lbl">Adres</div>
+            <div class="ci-val">Türkiye</div>
+          </div>
+        </div>
+        <div class="ci">
+          <span class="ci-icon">📧</span>
+          <div>
+            <div class="ci-lbl">E-Posta</div>
+            <div class="ci-val">info@gercekkuzeyspor.com</div>
+          </div>
+        </div>
+        <div class="ci">
+          <span class="ci-icon">📅</span>
+          <div>
+            <div class="ci-lbl">Kuruluş</div>
+            <div class="ci-val">19 Mayıs 2011</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner container">
+    <img src="bc6dec2d-4726-43c7-bfe6-c31b402aaa7e.jpg" alt="Gerçek Kuzey SK">
+    <div class="footer-rule"></div>
+    <p class="footer-copy">© 2026 Gerçek Kuzey Spor Kulübü. Tüm hakları saklıdır.</p>
+  </div>
+</footer>
+
+<script>
+  /* Navbar scroll effect */
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 55));
+
+  /* Mobile menu */
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  /* Star canvas */
+  (function () {
+    const c = document.getElementById('stars');
+    let W, H, stars = [], raf;
+
+    function resize() {
+      W = c.width  = innerWidth;
+      H = c.height = innerHeight;
+    }
+
+    function initStars() {
+      stars = Array.from({ length: 220 }, () => ({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.4 + 0.2,
+        a: Math.random() * 0.55 + 0.08,
+        da: (Math.random() - 0.5) * 0.006,
+      }));
+    }
+
+    function draw() {
+      const ctx = c.getContext('2d');
+      ctx.clearRect(0, 0, W, H);
+      stars.forEach(s => {
+        s.a += s.da;
+        if (s.a > 0.65 || s.a < 0.06) s.da *= -1;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(201,168,76,${s.a})`;
+        ctx.fill();
+      });
+      raf = requestAnimationFrame(draw);
+    }
+
+    resize(); initStars(); draw();
+    window.addEventListener('resize', () => { resize(); initStars(); });
+  })();
+
+  /* Scroll reveal */
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+  /* Form feedback */
+  function handleForm(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.submit-btn');
+    const sp  = btn.querySelector('span');
+    sp.textContent = 'Gönderildi ✓';
+    btn.style.background = '#2a5e24';
+    setTimeout(() => {
+      sp.textContent = 'Gönder';
+      btn.style.background = '';
+      e.target.reset();
+    }, 3200);
+  }
+</script>
+</body>
+</html>
