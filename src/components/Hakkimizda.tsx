@@ -89,12 +89,26 @@ export default function Hakkimizda() {
           <div className="reveal max-w-2xl space-y-4 text-white/55 text-[15px] leading-relaxed">
             <p>
               <strong className="text-gold font-semibold">Gerçek Kuzey Spor Kulübü</strong>,
-              genç sporcuların gelişimini destekleyen, disiplinli çalışma kültürünü ve takım
-              ruhunu merkeze alan bir amatör spor kulübüdür.
+              19 Mayıs 2011 tarihinde Cenk Temelatan tarafından İstanbul&apos;un 4. Levent semtinde
+              kurulmuştur. Beşiktaş bölgesinde faaliyet gösteren kulübümüz, gençleri futbola
+              kazandırmak ve sporu bir yaşam disiplini hâline getirmek amacıyla yola çıkmıştır.
             </p>
             <p>
-              Amacımız, sporcularımıza yalnızca sportif başarı değil; saygı, sorumluluk,
-              mücadele ve fair play bilinci kazandırmaktır.
+              Kurulduğumuz günden bu yana yalnızca sahada mücadele eden sporcular yetiştirmeyi
+              değil; aynı zamanda karakterli, saygılı, sorumluluk sahibi ve takım ruhunu
+              benimseyen bireyler kazandırmayı hedefliyoruz. Bizim için futbol, sadece bir oyun
+              değil; disiplinin, emeğin, dayanışmanın ve fair play anlayışının sahadaki
+              karşılığıdır.
+            </p>
+            <p>
+              Gerçek Kuzey Spor Kulübü olarak temel ilkelerimiz disiplin, saygı ve takım
+              ruhudur. Her antrenmanda, her maçta ve her adımda bu değerleri yaşatmayı
+              amaçlıyor; genç sporcularımızın hem sportif hem de kişisel gelişimlerine katkı
+              sağlamayı önemsiyoruz.
+            </p>
+            <p>
+              Bugün Beşiktaş&apos;ın yerel spor kültürüne katkı sunan kulübümüz, geleceğin
+              sporcularını yetiştirmek için aynı inanç ve kararlılıkla yoluna devam etmektedir.
             </p>
           </div>
         </div>
