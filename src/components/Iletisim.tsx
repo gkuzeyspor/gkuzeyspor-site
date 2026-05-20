@@ -3,10 +3,10 @@
 import { useState, useEffect, useRef, FormEvent } from "react";
 
 const contactInfo = [
-  { icon: "📍", label: "Adres",   value: "Adres bilgisi buraya gelecek" },
-  { icon: "📞", label: "Telefon", value: "Telefon bilgisi buraya gelecek" },
-  { icon: "📧", label: "E-Posta", value: "info@gercekkuzeysk.com" },
-  { icon: "🏟️", label: "Tesis",   value: "Antrenman sahası / tesis bilgisi buraya gelecek" },
+  { icon: "📍", label: "Adres",   value: "Beşiktaş, İstanbul" },
+  { icon: "📞", label: "Telefon", value: "+90 505 402 46 10" },
+  { icon: "📧", label: "E-Posta", value: "gkuzeyspor@hotmail.com" },
+  { icon: "🏟️", label: "Tesis",   value: "Beşiktaş Çilekli Spor Tesisleri" },
 ];
 
 export default function Iletisim() {

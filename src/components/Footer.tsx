@@ -60,9 +60,9 @@ export default function Footer() {
               İletişim
             </h4>
             <ul className="space-y-3">
-              <li className="text-[13px] text-white/40">info@gercekkuzeysk.com</li>
-              <li className="text-[13px] text-white/40">Telefon bilgisi buraya gelecek</li>
-              <li className="text-[13px] text-white/40">Tesis bilgisi buraya gelecek</li>
+              <li className="text-[13px] text-white/40">gkuzeyspor@hotmail.com</li>
+              <li className="text-[13px] text-white/40">+90 505 402 46 10</li>
+              <li className="text-[13px] text-white/40">Beşiktaş Çilekli Spor Tesisleri</li>
             </ul>
           </div>
 
