@@ -35,7 +35,7 @@ export default function Hero() {
             alt="Gerçek Kuzey Spor Kulübü"
             width={260}
             height={260}
-            className="object-contain drop-shadow-2xl mx-auto w-[180px] sm:w-[220px] md:w-[260px]"
+            className="object-contain drop-shadow-2xl mx-auto w-[180px] sm:w-[220px] md:w-[260px] mix-blend-multiply brightness-110"
             priority
           />
         </div>

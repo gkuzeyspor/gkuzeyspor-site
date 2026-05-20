@@ -47,7 +47,7 @@ export default function Navbar() {
             alt="Gerçek Kuzey Spor Kulübü"
             width={44}
             height={44}
-            className="object-contain drop-shadow-md"
+            className="object-contain drop-shadow-md mix-blend-multiply brightness-125"
             priority
           />
           <div className="flex flex-col leading-tight">

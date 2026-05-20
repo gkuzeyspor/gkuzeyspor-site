@@ -22,7 +22,7 @@ export default function Footer() {
                 alt="Gerçek Kuzey Spor Kulübü"
                 width={48}
                 height={48}
-                className="object-contain opacity-80"
+                className="object-contain opacity-90 mix-blend-multiply brightness-125"
               />
               <div className="flex flex-col leading-tight">
                 <span className="font-cinzel text-sm font-bold tracking-[0.13em] uppercase text-white/80">
