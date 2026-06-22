@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import nextConfig from "../next.config.ts";
+import nextConfig, {
+  createContentSecurityPolicy,
+  isDevelopmentEnvironment,
+} from "../next.config.ts";
 
 test("Next config applies baseline security headers to every route", async () => {
   assert.equal(typeof nextConfig.headers, "function");
@@ -17,4 +20,14 @@ test("Next config applies baseline security headers to every route", async () =>
 
 test("Next config does not disclose framework identity", () => {
   assert.equal(nextConfig.poweredByHeader, false);
+});
+
+test("CSP enables development relaxations only for explicit development environment", () => {
+  assert.equal(isDevelopmentEnvironment("development"), true);
+  assert.equal(isDevelopmentEnvironment("production"), false);
+  assert.equal(isDevelopmentEnvironment(undefined), false);
+
+  assert.match(createContentSecurityPolicy(true), /'unsafe-eval'/);
+  assert.match(createContentSecurityPolicy(true), /connect-src 'self' ws:/);
+  assert.doesNotMatch(createContentSecurityPolicy(false), /'unsafe-eval'|connect-src 'self' ws:/);
 });

@@ -42,6 +42,7 @@ export default function Iletisim() {
       name: data.get("name"),
       email: data.get("email"),
       message: data.get("message"),
+      website: data.get("website"),
     };
 
     setStatus("sending");

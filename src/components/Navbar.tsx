@@ -143,7 +143,7 @@ export default function Navbar() {
           </div>
         </a>
 
-        <ul className="hidden md:flex items-center gap-6 list-none">
+        <ul className="hidden xl:flex items-center gap-6 list-none">
           {links.map((l) => (
             <li key={l.href}>
               <a
@@ -213,7 +213,7 @@ export default function Navbar() {
         </ul>
 
         <button
-          className="md:hidden flex flex-col gap-1.5 p-1"
+          className="xl:hidden flex flex-col gap-1.5 p-1"
           onClick={() => setMenuOpen(true)}
           aria-label="Menüyü aç"
         >

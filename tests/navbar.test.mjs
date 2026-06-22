@@ -11,3 +11,8 @@ test("mobile navigation overlay remains scrollable on short screens", () => {
 test("mobile navigation locks background scrolling while open", () => {
   assert.match(navbarSource, /document\.body\.style\.overflow = "hidden"/);
 });
+
+test("desktop navigation waits until xl breakpoint", () => {
+  assert.match(navbarSource, /className="hidden xl:flex/);
+  assert.match(navbarSource, /className="xl:hidden/);
+});

@@ -1,4 +1,4 @@
-import { decodeEntities, toTitleCase } from "./tff";
+import { decodeEntities } from "./tff.ts";
 
 const PLAYERS_ORIGIN = "https://tffistanbul.org";
 const CLUB_ID = "1151";
@@ -12,8 +12,7 @@ const REVALIDATE_SECONDS = 60 * 60 * 24 * 30;
 
 export type PlayerRow = {
   name: string;
-  licenseNo: string;
-  birthDate: string;
+  birthYear: string;
   profileUrl: string;
 };
 
@@ -43,7 +42,7 @@ async function fetchPage(page: number): Promise<string | undefined> {
 
 const PROFILE_PATH = /^\/futbolcu\/[a-z0-9-]+\/\d+$/i;
 
-function parsePlayers(html: string): PlayerRow[] {
+export function parsePlayers(html: string): PlayerRow[] {
   const tableMatch = html.match(/players-table[\s\S]*?<tbody>([\s\S]*?)<\/tbody>/);
   if (!tableMatch) return [];
   const rows = [...tableMatch[1].matchAll(/<tr>([\s\S]*?)<\/tr>/g)];
@@ -54,17 +53,23 @@ function parsePlayers(html: string): PlayerRow[] {
     if (cells.length < 4) continue;
     const path = cells[0][1];
     if (!PROFILE_PATH.test(path)) continue;
+    const birthDate = decodeEntities(cells[3][2]).trim();
+    const birthDateMatch = /^\d{2}\.\d{2}\.(\d{4})$/.exec(birthDate);
+    if (!birthDateMatch) continue;
+    const name = decodeEntities(cells[0][2].replace(/<[^>]+>/g, ""))
+      .replace(/\s+/g, " ")
+      .trim();
+    if (!name) continue;
     out.push({
       profileUrl: `${PLAYERS_ORIGIN}${path}`,
-      name: toTitleCase(cells[0][2]),
-      licenseNo: decodeEntities(cells[2][2]).trim(),
-      birthDate: decodeEntities(cells[3][2]).trim(),
+      name,
+      birthYear: birthDateMatch[1],
     });
   }
   return out;
 }
 
-function lastPageNumber(html: string): number {
+export function lastPageNumber(html: string): number {
   const pageLinks = [...html.matchAll(/futbolcular\?p=(\d+)&amp;n=&amp;l=&amp;t=\d+/g)];
   const numbers = pageLinks.map((m) => Number(m[1])).filter((n) => Number.isFinite(n));
   return numbers.length ? Math.min(Math.max(...numbers), MAX_PAGES) : 1;
@@ -81,7 +86,9 @@ export async function getPlayers(): Promise<PlayerRow[]> {
     if (html) pages.push(html);
   }
 
-  const players = pages.flatMap(parsePlayers);
+  const players = [...new Map(
+    pages.flatMap(parsePlayers).map((player) => [player.profileUrl, player]),
+  ).values()];
   players.sort((a, b) => a.name.localeCompare(b.name, "tr"));
   return players;
 }

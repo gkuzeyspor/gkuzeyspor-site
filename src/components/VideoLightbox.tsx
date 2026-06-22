@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MasonryGrid } from "@/components/MasonryGrid";
 
 type VideoItem = {
@@ -10,6 +10,26 @@ type VideoItem = {
 
 export default function VideoLightbox({ videos }: { videos: VideoItem[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const isOpen = openIndex !== null;
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const previousFocus = document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null;
+    const focusFrame = requestAnimationFrame(() => closeButtonRef.current?.focus());
+
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      cancelAnimationFrame(focusFrame);
+      document.body.style.overflow = previousOverflow;
+      previousFocus?.focus();
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     if (openIndex === null) return;
@@ -59,6 +79,7 @@ export default function VideoLightbox({ videos }: { videos: VideoItem[] }) {
           className="fixed inset-0 z-[100] bg-navy-deep/95 backdrop-blur-sm flex items-center justify-center p-6 cursor-zoom-out"
         >
           <button
+            ref={closeButtonRef}
             type="button"
             onClick={() => setOpenIndex(null)}
             aria-label="Kapat"

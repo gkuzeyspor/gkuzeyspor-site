@@ -29,13 +29,12 @@ export default async function SporcularPage() {
           </p>
         ) : (
           <div className="border border-white/8 overflow-x-auto">
-            <table className="w-full text-left border-collapse min-w-[480px]">
+            <table className="w-full text-left border-collapse min-w-[360px]">
               <caption className="sr-only">Gerçek Kuzey Spor Kulübü lisanslı sporcu listesi</caption>
               <thead>
                 <tr className="bg-white/[0.03] border-b-2 border-sky-light/20">
                   <th scope="col" className="font-worksans text-[11px] font-bold tracking-[0.1em] uppercase text-white/45 px-5 py-4">Adı Soyadı</th>
-                  <th scope="col" className="font-worksans text-[11px] font-bold tracking-[0.1em] uppercase text-white/45 px-4 py-4 border-l border-white/8">Lisans No</th>
-                  <th scope="col" className="font-worksans text-[11px] font-bold tracking-[0.1em] uppercase text-white/45 px-4 py-4 border-l border-white/8">D. Tarihi</th>
+                  <th scope="col" className="font-worksans text-[11px] font-bold tracking-[0.1em] uppercase text-white/45 px-4 py-4 border-l border-white/8">Doğum Yılı</th>
                 </tr>
               </thead>
               <tbody>
@@ -54,8 +53,7 @@ export default async function SporcularPage() {
                         {p.name}
                       </a>
                     </td>
-                    <td className="font-worksans text-[13px] font-medium text-white/55 px-4 py-3 tabular-nums border-l border-white/5">{p.licenseNo}</td>
-                    <td className="font-worksans text-[13px] font-medium text-white/55 px-4 py-3 tabular-nums border-l border-white/5">{p.birthDate}</td>
+                    <td className="font-worksans text-[13px] font-medium text-white/55 px-4 py-3 tabular-nums border-l border-white/5">{p.birthYear}</td>
                   </tr>
                 ))}
               </tbody>
