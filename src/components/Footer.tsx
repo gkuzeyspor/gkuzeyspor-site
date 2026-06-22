@@ -52,7 +52,7 @@ export default function Footer() {
     <footer className="bg-navy-deep border-t border-sky-light/10 pt-16 pb-8">
       <div className="max-w-6xl mx-auto px-6 md:px-14">
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
 
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3">
@@ -103,6 +103,25 @@ export default function Footer() {
               <li className="font-worksans text-[13px] font-medium text-white/70">gkuzeyspor@hotmail.com</li>
               <li className="font-worksans text-[13px] font-medium text-white/70">+90 505 402 46 10</li>
               <li className="font-worksans text-[13px] font-medium text-white/70">Beşiktaş Çilekli Spor Tesisleri</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-cinzel font-bold text-xs tracking-[0.2em] uppercase text-white/80 mb-5">
+              Web Tasarımı
+            </h4>
+            <ul className="space-y-3">
+              <li className="font-worksans text-[13px] font-medium text-white/70">Arda Temelatan</li>
+              <li className="font-worksans text-[13px] font-medium text-white/70">
+                <a href="tel:+905303456195" className="hover:text-sky-light transition-colors duration-200">
+                  +90 530 345 61 95
+                </a>
+              </li>
+              <li className="font-worksans text-[13px] font-medium text-white/70">
+                <a href="mailto:arda_temelatan@hotmail.com" className="hover:text-sky-light transition-colors duration-200">
+                  arda_temelatan@hotmail.com
+                </a>
+              </li>
             </ul>
           </div>
 
