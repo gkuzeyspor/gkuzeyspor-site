@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import type { StandingRow, FixtureRow } from "@/lib/tff";
+import SmallCaps from "./SmallCaps";
 
 type Props = {
   leagueLabel: string;
@@ -127,8 +128,8 @@ export default function PuanDurumuView({ leagueLabel, weekLabel, groupLabel, sta
           <p className="reveal text-[10px] font-bold tracking-[0.5em] uppercase text-sky-light mb-3">
             Lig Durumu
           </p>
-          <h2 className="reveal font-cinzel font-bold uppercase text-white text-[26px] md:text-[38px] leading-tight tracking-[0.04em] mb-4">
-            Puan Durumu &amp; Fikstür
+          <h2 className="reveal font-cinzel font-bold text-white text-[26px] md:text-[38px] leading-tight tracking-[0.04em] mb-4">
+            <SmallCaps>{"Puan Durumu & Fikstür"}</SmallCaps>
           </h2>
           <div className="reveal w-14 h-0.5 bg-gradient-to-r from-sky-light to-transparent mb-2" />
           <p className="font-worksans font-medium text-white/65 text-[13px] tracking-[0.05em] uppercase">

@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const quickLinks = [
   { href: "#hero",        label: "Anasayfa" },
@@ -20,7 +23,7 @@ const socialLinks = [
   },
   {
     label: "Instagram",
-    href: "https://instagram.com",
+    href: "https://www.instagram.com/gercekkuzeysporkulubu/",
     icon: (
       <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
         <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163C8.74 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12s.014 3.668.072 4.948c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.668-.014 4.948-.072c4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
@@ -48,6 +51,15 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
+  const handleLink = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (!isHome) return;
+    e.preventDefault();
+    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <footer className="bg-navy-deep border-t border-sky-light/10 pt-16 pb-8">
       <div className="max-w-6xl mx-auto px-6 md:px-14">
@@ -73,7 +85,7 @@ export default function Footer() {
               </div>
             </div>
             <p className="font-worksans text-[13px] font-medium text-white/65 leading-relaxed max-w-xs">
-              Disiplin, takım ruhu ve fair play anlayışıyla sporun birleştirici gücünü yaşatıyoruz.
+              2011 yılından bu yana disiplin, takım ruhu ve fair play anlayışıyla sporun birleştirici gücünü yaşatıyoruz.
             </p>
           </div>
 
@@ -85,7 +97,8 @@ export default function Footer() {
               {quickLinks.map((l) => (
                 <li key={l.href}>
                   <a
-                    href={l.href}
+                    href={isHome ? l.href : `/${l.href}`}
+                    onClick={(e) => handleLink(e, l.href)}
                     className="font-worksans text-[13px] font-medium text-white/70 hover:text-sky-light transition-colors duration-200"
                   >
                     {l.label}
@@ -100,15 +113,30 @@ export default function Footer() {
               İletişim
             </h4>
             <ul className="space-y-3">
-              <li className="font-worksans text-[13px] font-medium text-white/70">gkuzeyspor@hotmail.com</li>
-              <li className="font-worksans text-[13px] font-medium text-white/70">+90 505 402 46 10</li>
+              <li className="font-worksans text-[13px] font-medium text-white/70">
+                <a href="mailto:gkuzeyspor@hotmail.com" className="hover:text-sky-light transition-colors duration-200">
+                  gkuzeyspor@hotmail.com
+                </a>
+              </li>
+              <li className="font-worksans text-[13px] font-medium text-white/70">
+                <a href="tel:+905054024610" className="hover:text-sky-light transition-colors duration-200">
+                  +90 505 402 46 10
+                </a>
+                {" "}— Cenk Temelatan
+              </li>
+              <li className="font-worksans text-[13px] font-medium text-white/70">
+                <a href="tel:+905323205851" className="hover:text-sky-light transition-colors duration-200">
+                  +90 532 320 58 51
+                </a>
+                {" "}— Enes Umut Serhuş
+              </li>
               <li className="font-worksans text-[13px] font-medium text-white/70">Beşiktaş Çilekli Spor Tesisleri</li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-cinzel font-bold text-xs tracking-[0.2em] uppercase text-white/80 mb-5">
-              Web Tasarımı
+            <h4 lang="en" className="font-cinzel font-bold text-xs tracking-[0.2em] uppercase text-white/80 mb-5">
+              Web Design
             </h4>
             <ul className="space-y-3">
               <li className="font-worksans text-[13px] font-medium text-white/70">Arda Temelatan</li>
@@ -128,7 +156,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-white/5 pt-7 flex flex-col sm:flex-row items-center justify-between gap-5">
-          <p className="font-worksans text-[11px] font-medium tracking-[0.18em] text-white/70">
+          <p className="font-worksans text-[13px] font-medium text-white/65">
             © 2026 Gerçek Kuzey Spor Kulübü. Tüm hakları saklıdır.
           </p>
           <div className="flex items-center gap-3">

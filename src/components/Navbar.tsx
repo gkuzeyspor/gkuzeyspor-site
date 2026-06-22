@@ -21,12 +21,6 @@ const programLinks = [
   { href: "/program/mac",       label: "Maç" },
 ];
 
-const ageLinks = [
-  { href: "/yas-kategorileri/u11", label: "U-11" },
-  { href: "/yas-kategorileri/u13", label: "U-13" },
-  { href: "/yas-kategorileri/u14", label: "U-14" },
-];
-
 function NavDropdown({
   label,
   items,
@@ -49,7 +43,7 @@ function NavDropdown({
       <button
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className={`relative flex items-center gap-1.5 font-inter text-[13px] font-bold tracking-[0.03em] uppercase transition-colors duration-200
+        className={`relative flex items-center gap-1.5 font-inter text-[13.5px] font-bold tracking-[0.03em] transition-colors duration-200
           ${scrolled ? "text-navy-dark/70 hover:text-navy-dark" : "text-white/60 hover:text-sky-light"}`}
       >
         {label}
@@ -59,14 +53,14 @@ function NavDropdown({
       </button>
 
       {open && (
-        <div className="absolute left-0 top-full pt-3 min-w-[160px]">
+        <div className="absolute left-0 top-full pt-3 min-w-[160px] max-w-[260px]">
           <div className="bg-white border border-navy-dark/10 py-2">
             {items.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="block px-5 py-2.5 font-inter text-[13px] font-bold uppercase tracking-[0.02em] text-navy-dark/80 hover:text-navy-dark hover:bg-navy-dark/[0.04] transition-colors duration-150"
+                className="block px-5 py-2.5 font-inter text-[13.5px] font-bold tracking-[0.02em] text-navy-dark/80 hover:text-navy-dark hover:bg-navy-dark/[0.04] transition-colors duration-150"
               >
                 {item.label}
               </a>
@@ -85,7 +79,6 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [albumOpen, setAlbumOpen] = useState(false);
   const [programOpen, setProgramOpen] = useState(false);
-  const [ageOpen, setAgeOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 55);
@@ -129,7 +122,7 @@ export default function Navbar() {
         <a
           href={isHome ? "#hero" : "/#hero"}
           onClick={(e) => handleLink(e, "#hero")}
-          className="flex items-center gap-3"
+          className="flex items-center gap-3 flex-shrink-0"
           aria-label="Gerçek Kuzey Spor Kulübü - Anasayfa"
         >
           <Image
@@ -150,13 +143,13 @@ export default function Navbar() {
           </div>
         </a>
 
-        <ul className="hidden md:flex items-center gap-9 list-none">
+        <ul className="hidden md:flex items-center gap-6 list-none">
           {links.map((l) => (
             <li key={l.href}>
               <a
                 href={isHome ? l.href : `/${l.href}`}
                 onClick={(e) => handleLink(e, l.href)}
-                className={`relative font-inter text-[13px] font-bold tracking-[0.03em] uppercase transition-colors duration-200
+                className={`relative font-inter text-[13.5px] font-bold tracking-[0.03em] transition-colors duration-200
                   after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0
                   after:transition-all after:duration-300 hover:after:w-full pb-1
                   ${scrolled
@@ -170,16 +163,51 @@ export default function Navbar() {
           ))}
 
           <NavDropdown label="Program" items={programLinks} open={programOpen} setOpen={setProgramOpen} scrolled={scrolled} />
-          <NavDropdown label="Yaş Kategorileri" items={ageLinks} open={ageOpen} setOpen={setAgeOpen} scrolled={scrolled} />
           <NavDropdown label="Albüm" items={albumLinks} open={albumOpen} setOpen={setAlbumOpen} scrolled={scrolled} />
 
           <li>
             <a
+              href="/yas-kategorileri"
+              className={`font-inter text-[13.5px] font-bold tracking-[0.03em] transition-colors duration-200
+                ${scrolled ? "text-navy-dark/70 hover:text-navy-dark" : "text-white/60 hover:text-sky-light"}`}
+            >
+              Yaş Kategorileri
+            </a>
+          </li>
+          <li>
+            <a
+              href="/tesislerimiz"
+              className={`font-inter text-[13.5px] font-bold tracking-[0.03em] transition-colors duration-200
+                ${scrolled ? "text-navy-dark/70 hover:text-navy-dark" : "text-white/60 hover:text-sky-light"}`}
+            >
+              Tesislerimiz
+            </a>
+          </li>
+          <li>
+            <a
               href="/emegi-gecenler"
-              className={`font-inter text-[13px] font-bold tracking-[0.03em] uppercase transition-colors duration-200
+              className={`font-inter text-[13.5px] font-bold tracking-[0.03em] transition-colors duration-200
                 ${scrolled ? "text-navy-dark/70 hover:text-navy-dark" : "text-white/60 hover:text-sky-light"}`}
             >
               Emeği Geçenler
+            </a>
+          </li>
+          <li>
+            <a
+              href="/basarilarimiz"
+              className={`font-inter text-[13.5px] font-bold tracking-[0.03em] transition-colors duration-200
+                ${scrolled ? "text-navy-dark/70 hover:text-navy-dark" : "text-white/60 hover:text-sky-light"}`}
+            >
+              Başarılarımız
+            </a>
+          </li>
+          <li>
+            <a
+              href="/sporcular"
+              className={`font-inter text-[13.5px] font-bold tracking-[0.03em] transition-colors duration-200
+                ${scrolled ? "text-navy-dark/70 hover:text-navy-dark" : "text-white/60 hover:text-sky-light"}`}
+            >
+              Sporcular
             </a>
           </li>
         </ul>
@@ -214,7 +242,7 @@ export default function Navbar() {
               key={l.href}
               href={isHome ? l.href : `/${l.href}`}
               onClick={(e) => handleLink(e, l.href)}
-              className="font-inter text-xl font-bold tracking-[0.03em] uppercase text-white/70 hover:text-sky-light transition-colors"
+              className="font-inter text-xl font-bold tracking-[0.03em] text-white/70 hover:text-sky-light transition-colors"
             >
               {l.label}
             </a>
@@ -222,11 +250,10 @@ export default function Navbar() {
 
           {[
             { label: "Program", items: programLinks },
-            { label: "Yaş Kategorileri", items: ageLinks },
             { label: "Albüm", items: albumLinks },
           ].map((group) => (
             <div key={group.label} className="flex flex-col items-center gap-4">
-              <span className="font-inter text-xl font-bold tracking-[0.03em] uppercase text-white/30">
+              <span className="font-inter text-xl font-bold tracking-[0.03em] text-white/30">
                 {group.label}
               </span>
               <div className="flex flex-col items-center gap-3">
@@ -235,7 +262,7 @@ export default function Navbar() {
                     key={a.label}
                     href={a.href}
                     onClick={() => setMenuOpen(false)}
-                    className="font-inter text-base font-bold tracking-[0.03em] uppercase text-white/70 hover:text-sky-light transition-colors"
+                    className="font-inter text-base font-bold tracking-[0.03em] text-white/70 hover:text-sky-light transition-colors"
                   >
                     {a.label}
                   </a>
@@ -245,11 +272,43 @@ export default function Navbar() {
           ))}
 
           <a
+            href="/yas-kategorileri"
+            onClick={() => setMenuOpen(false)}
+            className="font-inter text-xl font-bold tracking-[0.03em] text-white/70 hover:text-sky-light transition-colors"
+          >
+            Yaş Kategorileri
+          </a>
+
+          <a
+            href="/tesislerimiz"
+            onClick={() => setMenuOpen(false)}
+            className="font-inter text-xl font-bold tracking-[0.03em] text-white/70 hover:text-sky-light transition-colors"
+          >
+            Tesislerimiz
+          </a>
+
+          <a
             href="/emegi-gecenler"
             onClick={() => setMenuOpen(false)}
-            className="font-inter text-xl font-bold tracking-[0.03em] uppercase text-white/70 hover:text-sky-light transition-colors"
+            className="font-inter text-xl font-bold tracking-[0.03em] text-white/70 hover:text-sky-light transition-colors"
           >
             Emeği Geçenler
+          </a>
+
+          <a
+            href="/basarilarimiz"
+            onClick={() => setMenuOpen(false)}
+            className="font-inter text-xl font-bold tracking-[0.03em] text-white/70 hover:text-sky-light transition-colors"
+          >
+            Başarılarımız
+          </a>
+
+          <a
+            href="/sporcular"
+            onClick={() => setMenuOpen(false)}
+            className="font-inter text-xl font-bold tracking-[0.03em] text-white/70 hover:text-sky-light transition-colors"
+          >
+            Sporcular
           </a>
         </div>
       )}

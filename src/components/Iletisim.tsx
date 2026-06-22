@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect, useRef, FormEvent } from "react";
+import SmallCaps from "./SmallCaps";
 
 const contactInfo = [
   { icon: "📍", label: "Adres",   value: "Beşiktaş, İstanbul" },
-  { icon: "📞", label: "Telefon", value: "+90 505 402 46 10" },
+  { icon: "📞", label: "Telefon", value: "+90 505 402 46 10 — Cenk Temelatan" },
+  { icon: "📞", label: "Telefon", value: "+90 532 320 58 51 — Enes Umut Serhuş" },
   { icon: "📧", label: "E-Posta", value: "gkuzeyspor@hotmail.com" },
   { icon: "🏟️", label: "Tesis",   value: "Beşiktaş Çilekli Spor Tesisleri" },
 ];
@@ -82,8 +84,8 @@ export default function Iletisim() {
           <p className="reveal text-[10px] font-bold tracking-[0.5em] uppercase text-sky-light mb-3">
             İletişim
           </p>
-          <h2 className="reveal font-cinzel font-bold uppercase text-white text-[26px] md:text-[38px] leading-tight tracking-[0.04em] mb-4">
-            Bizimle İletişime Geç
+          <h2 className="reveal font-cinzel font-bold text-white text-[26px] md:text-[38px] leading-tight tracking-[0.04em] mb-4">
+            <SmallCaps>Bizimle İletişime Geçin</SmallCaps>
           </h2>
           <div className="reveal w-14 h-0.5 bg-gradient-to-r from-sky-light to-transparent" />
         </div>
@@ -177,7 +179,7 @@ export default function Iletisim() {
             </p>
             {contactInfo.map((item) => (
               <div
-                key={item.label}
+                key={item.value}
                 className="flex items-start gap-4 p-4 border border-white/5 bg-white/[0.02]
                   hover:border-sky-light/20 hover:bg-sky-light/[0.04] transition-all duration-200"
               >

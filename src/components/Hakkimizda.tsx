@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import SmallCaps from "./SmallCaps";
 
 const values = [
   {
@@ -87,8 +88,8 @@ export default function Hakkimizda() {
           <p className="reveal text-[10px] font-bold tracking-[0.5em] uppercase text-sky-light mb-3">
             Tarihçe
           </p>
-          <h2 className="reveal font-cinzel font-bold uppercase text-white text-[26px] md:text-[38px] leading-tight tracking-[0.04em] mb-4">
-            Kulüp Tarihçemiz
+          <h2 className="reveal font-cinzel font-bold text-white text-[26px] md:text-[38px] leading-tight tracking-[0.04em] mb-4">
+            <SmallCaps>Kulüp Tarihçemiz</SmallCaps>
           </h2>
           <div className="reveal w-14 h-0.5 bg-gradient-to-r from-sky-light to-transparent mb-10" />
           <div className="reveal max-w-2xl space-y-4 font-worksans font-medium text-white/75 text-[15px] leading-relaxed">

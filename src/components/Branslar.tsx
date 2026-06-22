@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { BranchCard } from "./BranchCard";
+import SmallCaps from "./SmallCaps";
 
 const branches = [
   {
@@ -85,8 +86,8 @@ export default function Branslar() {
           <p className="reveal text-[10px] font-bold tracking-[0.5em] uppercase text-sky-light mb-3">
             Branşlarımız
           </p>
-          <h2 className="reveal font-cinzel font-bold uppercase text-white text-[26px] md:text-[38px] leading-tight tracking-[0.04em] mb-4">
-            Spor Dallarımız
+          <h2 className="reveal font-cinzel font-bold text-white text-[26px] md:text-[38px] leading-tight tracking-[0.04em] mb-4">
+            <SmallCaps>Spor Dallarımız</SmallCaps>
           </h2>
           <div className="reveal w-14 h-0.5 bg-gradient-to-r from-sky-light to-transparent" />
         </div>

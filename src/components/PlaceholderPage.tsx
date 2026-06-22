@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SmallCaps from "./SmallCaps";
 
 export default function PlaceholderPage({
   eyebrow,
@@ -15,8 +16,8 @@ export default function PlaceholderPage({
         <p className="text-[10px] font-bold tracking-[0.5em] uppercase text-sky-light mb-3">
           {eyebrow}
         </p>
-        <h1 className="font-cinzel font-bold uppercase text-white text-[28px] md:text-[42px] leading-tight tracking-[0.04em] mb-6">
-          {title}
+        <h1 className="font-cinzel font-bold text-white text-[28px] md:text-[42px] leading-tight tracking-[0.04em] mb-6">
+          <SmallCaps>{title}</SmallCaps>
         </h1>
         <div className="w-14 h-0.5 bg-gradient-to-r from-sky-light to-transparent mx-auto mb-8" />
         <p className="font-worksans font-medium text-white/70 text-[15px] leading-relaxed mb-10">

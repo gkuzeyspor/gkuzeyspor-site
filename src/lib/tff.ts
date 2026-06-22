@@ -80,7 +80,7 @@ const FALLBACK: LeagueData = {
   ],
 };
 
-function decodeEntities(s: string): string {
+export function decodeEntities(s: string): string {
   return s
     .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
     .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec, 10)))
@@ -89,7 +89,7 @@ function decodeEntities(s: string): string {
     .trim();
 }
 
-function toTitleCase(s: string): string {
+export function toTitleCase(s: string): string {
   return decodeEntities(s)
     .toLocaleLowerCase("tr-TR")
     .replace(/(^|\s|-)(\p{L})/gu, (_, sep, ch) => sep + ch.toLocaleUpperCase("tr-TR"));
