@@ -11,19 +11,22 @@ const config: Config = {
       colors: {
         navy: {
           deep:  "#050d1a",
-          dark:  "#0a1628",
+          dark:  "#003381",
           mid:   "#1a2a4a",
           light: "#0d3b7a",
         },
-        gold: {
-          DEFAULT: "#c9a84c",
-          light:   "#e8c96a",
-          dim:     "#8a6e30",
+        sky: {
+          DEFAULT: "#00eaff",
+          light:   "#98cef0",
+          dim:     "#2e6da3",
         },
       },
       fontFamily: {
-        cinzel:  ["var(--font-cinzel)", "serif"],
-        raleway: ["var(--font-raleway)", "sans-serif"],
+        cinzel:   ["var(--font-cinzel)", "serif"],
+        raleway:  ["var(--font-raleway)", "sans-serif"],
+        worksans: ["var(--font-worksans)", "sans-serif"],
+        shadows:  ["var(--font-shadows)", "cursive"],
+        inter:    ["var(--font-inter)", "sans-serif"],
       },
     },
   },

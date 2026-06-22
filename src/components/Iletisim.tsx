@@ -10,7 +10,8 @@ const contactInfo = [
 ];
 
 export default function Iletisim() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -31,18 +32,45 @@ export default function Iletisim() {
     return () => observer.disconnect();
   }, []);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSent(true);
-    setTimeout(() => {
-      setSent(false);
-      (e.target as HTMLFormElement).reset();
-    }, 3500);
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const payload = {
+      name: data.get("name"),
+      email: data.get("email"),
+      message: data.get("message"),
+    };
+
+    setStatus("sending");
+    setErrorMsg("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const result = await res.json();
+
+      if (!res.ok) {
+        setStatus("error");
+        setErrorMsg(result.error || "Mesaj gönderilemedi, lütfen tekrar deneyin.");
+        return;
+      }
+
+      setStatus("sent");
+      form.reset();
+      setTimeout(() => setStatus("idle"), 4000);
+    } catch {
+      setStatus("error");
+      setErrorMsg("Bağlantı hatası, lütfen tekrar deneyin.");
+    }
   };
 
   const inputClass =
     "w-full bg-white/[0.03] border border-white/10 px-4 py-3 text-white text-sm " +
-    "placeholder:text-white/25 outline-none focus:border-gold/50 focus:bg-gold/[0.04] " +
+    "placeholder:text-white/25 outline-none focus:border-sky-light/50 focus:bg-sky-light/[0.04] " +
     "transition-all duration-200";
 
   return (
@@ -51,13 +79,13 @@ export default function Iletisim() {
 
         {/* Header */}
         <div className="mb-14">
-          <p className="reveal text-[10px] font-bold tracking-[0.5em] uppercase text-gold mb-3">
+          <p className="reveal text-[10px] font-bold tracking-[0.5em] uppercase text-sky-light mb-3">
             İletişim
           </p>
           <h2 className="reveal font-cinzel font-bold uppercase text-white text-[26px] md:text-[38px] leading-tight tracking-[0.04em] mb-4">
             Bizimle İletişime Geç
           </h2>
-          <div className="reveal w-14 h-0.5 bg-gradient-to-r from-gold to-transparent" />
+          <div className="reveal w-14 h-0.5 bg-gradient-to-r from-sky-light to-transparent" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20">
@@ -65,54 +93,65 @@ export default function Iletisim() {
           {/* Form */}
           <form onSubmit={handleSubmit} className="reveal space-y-5" noValidate>
             <div>
-              <label className="block text-[10px] font-bold tracking-[0.3em] uppercase text-gold mb-2">
+              <label className="block text-[10px] font-bold tracking-[0.3em] uppercase text-sky-light mb-2">
                 Ad Soyad
               </label>
               <input
                 type="text"
+                name="name"
                 placeholder="Adınızı ve soyadınızı girin"
                 required
+                disabled={status === "sending"}
                 className={inputClass}
               />
             </div>
             <div>
-              <label className="block text-[10px] font-bold tracking-[0.3em] uppercase text-gold mb-2">
+              <label className="block text-[10px] font-bold tracking-[0.3em] uppercase text-sky-light mb-2">
                 E-Posta
               </label>
               <input
                 type="email"
+                name="email"
                 placeholder="ornek@mail.com"
                 required
+                disabled={status === "sending"}
                 className={inputClass}
               />
             </div>
             <div>
-              <label className="block text-[10px] font-bold tracking-[0.3em] uppercase text-gold mb-2">
+              <label className="block text-[10px] font-bold tracking-[0.3em] uppercase text-sky-light mb-2">
                 Mesaj
               </label>
               <textarea
                 rows={5}
+                name="message"
                 placeholder="Mesajınızı buraya yazın…"
                 required
+                disabled={status === "sending"}
                 className={inputClass + " resize-y"}
               />
             </div>
             <button
               type="submit"
+              disabled={status === "sending" || status === "sent"}
               className={`px-10 py-3.5 font-bold text-[11px] tracking-[0.3em] uppercase transition-all duration-200
-                ${sent
+                ${status === "sent"
                   ? "bg-green-700 text-white cursor-default"
-                  : "bg-gold text-navy-dark hover:bg-gold-light"
+                  : status === "sending"
+                  ? "bg-sky-light/50 text-navy-dark cursor-wait"
+                  : "bg-sky-light text-navy-dark hover:brightness-110"
                 }`}
             >
-              {sent ? "Gönderildi ✓" : "Gönder"}
+              {status === "sent" ? "Gönderildi ✓" : status === "sending" ? "Gönderiliyor…" : "Gönder"}
             </button>
-            <p className="text-[11px] text-white/30">* Bu form frontend-only demo amaçlıdır.</p>
+            {status === "error" && (
+              <p className="font-worksans text-[12px] font-medium text-red-400">{errorMsg}</p>
+            )}
           </form>
 
           {/* Info */}
           <div className="reveal reveal-delay-2 space-y-4">
-            <p className="text-white/55 text-[14px] leading-relaxed mb-8">
+            <p className="font-worksans font-medium text-white/75 text-[14px] leading-relaxed mb-8">
               Kulübümüze üye olmak, etkinliklerimiz hakkında bilgi almak veya herhangi bir konuda
               destek için aşağıdaki bilgilerden bize ulaşabilirsiniz.
             </p>
@@ -120,20 +159,35 @@ export default function Iletisim() {
               <div
                 key={item.label}
                 className="flex items-start gap-4 p-4 border border-white/5 bg-white/[0.02]
-                  hover:border-gold/20 hover:bg-gold/[0.04] transition-all duration-200"
+                  hover:border-sky-light/20 hover:bg-sky-light/[0.04] transition-all duration-200"
               >
                 <span className="text-xl mt-0.5 flex-shrink-0">{item.icon}</span>
                 <div>
-                  <div className="text-[9px] font-bold tracking-[0.35em] uppercase text-gold mb-1">
+                  <div className="text-[9px] font-bold tracking-[0.35em] uppercase text-sky-light mb-1">
                     {item.label}
                   </div>
-                  <div className="text-[13px] text-white/65 leading-snug">{item.value}</div>
+                  <div className="font-worksans font-medium text-[13px] text-white/85 leading-snug">{item.value}</div>
                 </div>
               </div>
             ))}
           </div>
 
         </div>
+
+        {/* Map */}
+        <div className="reveal reveal-delay-3 mt-14 border border-white/6 grayscale-[0.3] hover:grayscale-0 transition-all duration-500">
+          <iframe
+            src="https://www.google.com/maps?q=Beşiktaş+Çilekli+Spor+Tesisleri,+İstanbul&output=embed"
+            width="100%"
+            height="340"
+            style={{ border: 0, display: "block" }}
+            loading="lazy"
+            allowFullScreen
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Gerçek Kuzey Spor Kulübü Konumu"
+          />
+        </div>
+
       </div>
     </section>
   );

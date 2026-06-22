@@ -75,20 +75,25 @@ export default function Hakkimizda() {
   }, []);
 
   return (
-    <section id="hakkimizda" ref={sectionRef} className="py-24 md:py-32 bg-navy-dark">
-      <div className="max-w-6xl mx-auto px-6 md:px-14">
+    <section id="hakkimizda" ref={sectionRef} className="relative py-24 md:py-32 bg-navy-dark overflow-hidden">
+      <div
+        className="absolute inset-0 bg-cover"
+        style={{ backgroundImage: "url(/tarihce-bg.jpg)", backgroundPosition: "center 85%" }}
+      />
+      <div className="absolute inset-0 bg-navy-dark/55" />
+      <div className="relative max-w-6xl mx-auto px-6 md:px-14">
 
         <div className="mb-16">
-          <p className="reveal text-[10px] font-bold tracking-[0.5em] uppercase text-gold mb-3">
-            Hakkımızda
+          <p className="reveal text-[10px] font-bold tracking-[0.5em] uppercase text-sky-light mb-3">
+            Tarihçe
           </p>
           <h2 className="reveal font-cinzel font-bold uppercase text-white text-[26px] md:text-[38px] leading-tight tracking-[0.04em] mb-4">
-            Kulüp Kimliğimiz
+            Kulüp Tarihçemiz
           </h2>
-          <div className="reveal w-14 h-0.5 bg-gradient-to-r from-gold to-transparent mb-10" />
-          <div className="reveal max-w-2xl space-y-4 text-white/55 text-[15px] leading-relaxed">
+          <div className="reveal w-14 h-0.5 bg-gradient-to-r from-sky-light to-transparent mb-10" />
+          <div className="reveal max-w-2xl space-y-4 font-worksans font-medium text-white/75 text-[15px] leading-relaxed">
             <p>
-              <strong className="text-gold font-semibold">Gerçek Kuzey Spor Kulübü</strong>,
+              <strong className="text-sky-light font-semibold">Gerçek Kuzey Spor Kulübü</strong>,
               19 Mayıs 2011 tarihinde Cenk Temelatan tarafından İstanbul&apos;un 4. Levent semtinde
               kurulmuştur. Beşiktaş bölgesinde faaliyet gösteren kulübümüz, gençleri futbola
               kazandırmak ve sporu bir yaşam disiplini hâline getirmek amacıyla yola çıkmıştır.
@@ -122,12 +127,12 @@ export default function Hakkimizda() {
                 hover:bg-navy-mid transition-colors duration-300 cursor-default`}
             >
               {/* Number */}
-              <div className="text-[11px] font-bold tracking-[0.3em] text-gold/50 mb-6 font-cinzel">
+              <div className="text-[11px] font-bold tracking-[0.3em] text-sky-light/50 mb-6 font-cinzel">
                 {v.num}
               </div>
 
               {/* Icon */}
-              <div className="text-gold/70 mb-5 group-hover:text-gold transition-colors duration-300">
+              <div className="text-sky-light/70 mb-5 group-hover:text-sky-light transition-colors duration-300">
                 {v.icon}
               </div>
 
@@ -137,12 +142,12 @@ export default function Hakkimizda() {
               </h3>
 
               {/* Desc */}
-              <p className="text-white/45 text-[13px] leading-relaxed group-hover:text-white/60 transition-colors duration-300">
+              <p className="font-worksans font-medium text-white/65 text-[13px] leading-relaxed group-hover:text-white/80 transition-colors duration-300">
                 {v.desc}
               </p>
 
               {/* Bottom accent */}
-              <div className="mt-6 w-0 h-px bg-gold group-hover:w-full transition-all duration-500" />
+              <div className="mt-6 w-0 h-px bg-sky-light group-hover:w-full transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]" />
             </div>
           ))}
         </div>

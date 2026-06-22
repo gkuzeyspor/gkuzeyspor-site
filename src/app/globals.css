@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Work+Sans:wght@400;500;600;700;800&family=Shadows+Into+Light&family=Inter:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,6 +7,9 @@
 :root {
   --font-cinzel:  'Cinzel', serif;
   --font-raleway: 'Raleway', sans-serif;
+  --font-worksans: 'Work Sans', sans-serif;
+  --font-shadows: 'Shadows Into Light', cursive;
+  --font-inter:   'Inter', sans-serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -14,7 +17,7 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-raleway);
-  background-color: #0a1628;
+  background-color: #003381;
   color: #ffffff;
   overflow-x: hidden;
 }
@@ -75,4 +78,13 @@ body {
 }
 .scroll-dot-anim {
   animation: scrollDot 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { transition: none; opacity: 1; transform: none; }
+  .hero-logo-anim,
+  .hero-item-1, .hero-item-2, .hero-item-3, .hero-item-4, .hero-item-5 {
+    animation: none;
+    opacity: 1;
+  }
 }

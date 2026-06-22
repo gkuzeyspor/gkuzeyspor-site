@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-21T23:45:00Z",
+  "title": "Design System: Gerçek Kuzey Spor Kulübü",
+  "extensions": {
+    "colorMeta": {
+      "floodlight-cyan": { "role": "primary", "displayName": "Floodlight Cyan", "canonical": "#00eaff", "tonalRamp": ["#001a1f", "#003f4d", "#00637a", "#0087a6", "#00abd2", "#00eaff", "#5ef2ff", "#b8f8ff"] },
+      "navy-deep": { "role": "neutral", "displayName": "Navy Deep", "canonical": "#050d1a", "tonalRamp": ["#020509", "#050d1a", "#0a1830", "#102449", "#1a2a4a", "#0d3b7a", "#003381", "#0d3b7a"] },
+      "navy-dark": { "role": "neutral", "displayName": "Navy Dark", "canonical": "#003381" },
+      "navy-mid": { "role": "neutral", "displayName": "Navy Mid", "canonical": "#1a2a4a" },
+      "navy-light": { "role": "neutral", "displayName": "Navy Light", "canonical": "#0d3b7a" },
+      "ink-white": { "role": "neutral", "displayName": "Ink White", "canonical": "#ffffff" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Section Display", "purpose": "Bölüm başlıkları (Hakkımızda, Branşlarımız, İletişim)." },
+      "hero-display": { "displayName": "Hero Display", "purpose": "Sadece Hero başlığı." },
+      "body": { "displayName": "Body", "purpose": "Paragraf metni." },
+      "label": { "displayName": "Eyebrow Label", "purpose": "Etiketler, form label'ları, meta bilgiler." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "reveal-ease", "value": "ease, 0.65s", "purpose": "Scroll-triggered section reveal (opacity + translateY)." },
+      { "name": "hero-entrance-ease", "value": "cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Hero logo/text entrance animation." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ana CTA, Floodlight Cyan zemin.",
+      "html": "<button class=\"ds-btn-primary\">Kulübü Tanı</button>",
+      "css": ".ds-btn-primary { background: #00eaff; color: #003381; padding: 14px 40px; font-weight: 700; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; border: none; border-radius: 0; transition: background 0.2s; } .ds-btn-primary:hover { background: #98cef0; } .ds-btn-primary:focus-visible { outline: 2px solid #00eaff; outline-offset: 2px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "İkincil CTA, şeffaf zemin + border.",
+      "html": "<button class=\"ds-btn-ghost\">İletişime Geç</button>",
+      "css": ".ds-btn-ghost { background: transparent; color: rgba(255,255,255,0.8); padding: 14px 40px; font-weight: 700; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.3); border-radius: 0; transition: border-color 0.2s, color 0.2s; } .ds-btn-ghost:hover { border-color: #00eaff; color: #00eaff; } .ds-btn-ghost:focus-visible { outline: 2px solid #00eaff; outline-offset: 2px; }"
+    },
+    {
+      "name": "Value Card",
+      "kind": "card",
+      "refersTo": "value-card",
+      "description": "Hakkımızda/Branşlar bölümlerindeki değer/branş kartı; flat, ince border, hover'da genişleyen alt çizgi.",
+      "html": "<div class=\"ds-card\"><div class=\"ds-card-accent\"></div><div class=\"ds-card-title\">Disiplin</div><p class=\"ds-card-desc\">Düzenli antrenman ve sorumlu spor anlayışı.</p></div>",
+      "css": ".ds-card { background: #003381; border: 1px solid rgba(255,255,255,0.06); padding: 32px; position: relative; transition: background 0.3s; } .ds-card:hover { background: #1a2a4a; } .ds-card-accent { width: 0; height: 1px; background: #00eaff; transition: width 0.5s cubic-bezier(0.175,0.885,0.32,1.275); } .ds-card:hover .ds-card-accent { width: 100%; } .ds-card-title { font-family: 'Cinzel', serif; font-weight: 700; color: #fff; font-size: 16px; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; } .ds-card-desc { color: rgba(255,255,255,0.55); font-size: 15px; line-height: 1.6; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "İletişim formu metin alanı.",
+      "html": "<input class=\"ds-input\" placeholder=\"Ad Soyad\" />",
+      "css": ".ds-input { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 12px 16px; color: #fff; font-size: 14px; border-radius: 0; outline: none; transition: border-color 0.2s, background 0.2s; } .ds-input::placeholder { color: rgba(255,255,255,0.25); } .ds-input:focus { border-color: rgba(0,234,255,0.5); background: rgba(0,234,255,0.04); }"
+    },
+    {
+      "name": "Eyebrow Label",
+      "kind": "custom",
+      "refersTo": "label",
+      "description": "Bölüm üstü küçük etiket (örn. 'Hakkımızda', 'Türkiye · Amatör Spor Kulübü').",
+      "html": "<p class=\"ds-eyebrow\">Hakkımızda</p>",
+      "css": ".ds-eyebrow { font-family: 'Work Sans', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.5em; text-transform: uppercase; color: #00eaff; }"
+    },
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Navbar masaüstü linki, alt çizgi hover animasyonlu.",
+      "html": "<a class=\"ds-nav-link\">Hakkımızda</a>",
+      "css": ".ds-nav-link { position: relative; font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.6); padding-bottom: 4px; transition: color 0.2s; } .ds-nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; height: 1px; width: 0; background: #00eaff; transition: width 0.3s; } .ds-nav-link:hover { color: #00eaff; } .ds-nav-link:hover::after { width: 100%; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Night Pitch",
+    "overview": "Bir amatör futbol sahasının gece antrenmanı: koyu lacivert gökyüzü, flood-ışığı gibi parlayan tek bir cyan vurgu, ve disiplinli, sade çizgilerle çevrili bir alan. Sistem resmi ve güvenilir durmak zorunda; jenerik bir SaaS ürünü veya pazarlama ajansı sitesi gibi görünmemeli. Her şey lacivert zemin üzerine kurulu; Floodlight Cyan yalnızca dikkat çekmesi gereken yerde yakılır, asla zemin rengi olarak kullanılmaz.",
+    "keyCharacteristics": [
+      "Tek baskın zemin: lacivert (4 tonlu derinlik skalası)",
+      "Tek vurgu rengi: Floodlight Cyan, sade ve seyrek kullanılan",
+      "Düz yüzeyler, gölge yerine ince çizgi/border ile ayrım",
+      "Scroll-reveal ile sahneye giriş, abartısız geçiş süreleri (0.65s)"
+    ],
+    "rules": [
+      { "name": "The Single Accent Rule", "body": "Floodlight Cyan tek vurgu rengidir; sayfada ikinci bir renk ailesi yok. Vurgu her zaman ince çizgi, etiket veya CTA biçiminde gelir, asla geniş bir yüzey doldurmaz.", "section": "colors" },
+      { "name": "The Three-Voice Rule", "body": "Cinzel başlık için, Work Sans hero ve etiket için, Raleway gövde için: hiçbir rol bir diğerinin yerini almaz.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "Kartlar ve yüzeyler gölgesiz durur; hover durumunda zemin tonu değişir veya ince bir cyan çizgi genişler, gölge eklenmez.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do Floodlight Cyan'ı seyrek kullan: etiket, ince çizgi, CTA. Asla geniş zemin.",
+      "Do kartlarda ve bölümlerde flat yüzey + ince border kullan, gölge ekleme.",
+      "Do her animasyona prefers-reduced-motion: reduce karşılığı tanımla.",
+      "Do üç font ailesini (Cinzel/Work Sans/Raleway) rolüne göre ayrı tut."
+    ],
+    "donts": [
+      "Don't gradient metin (background-clip: text + gradient) kullan.",
+      "Don't glassmorphism'i süsleme amaçlı ekle.",
+      "Don't hero-metric şablonunu kullan.",
+      "Don't gold/altın rengi geri getir; marka kimliği artık tek vurgu olarak Floodlight Cyan'da sabitlendi.",
+      "Don't kart köşelerine radius ekle; sistem kesin hatlı (radius 0) kalmalı."
+    ]
+  }
+}

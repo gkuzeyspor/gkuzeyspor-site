@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { BranchCard } from "./BranchCard";
 
 const branches = [
   {
@@ -43,8 +44,11 @@ const branches = [
   },
 ];
 
+const POSITIONS = ["front", "middle", "back"] as const;
+
 export default function Branslar() {
   const sectionRef = useRef<HTMLElement>(null);
+  const [order, setOrder] = useState([0, 1, 2]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -64,50 +68,41 @@ export default function Branslar() {
     return () => observer.disconnect();
   }, []);
 
+  const handleShuffle = () => {
+    setOrder((prev) => [...prev.slice(1), prev[0]]);
+  };
+
   return (
-    <section id="branslar" ref={sectionRef} className="py-24 md:py-32 bg-navy-deep">
-      <div className="max-w-6xl mx-auto px-6 md:px-14">
+    <section id="branslar" ref={sectionRef} className="relative py-24 md:py-32 bg-navy-deep overflow-hidden">
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: "url(/spor%20dallar%C4%B1m%C4%B1z.jpeg)" }}
+      />
+      <div className="absolute inset-0 bg-navy-deep/55" />
+      <div className="relative max-w-6xl mx-auto px-6 md:px-14">
 
         <div className="mb-14">
-          <p className="reveal text-[10px] font-bold tracking-[0.5em] uppercase text-gold mb-3">
+          <p className="reveal text-[10px] font-bold tracking-[0.5em] uppercase text-sky-light mb-3">
             Branşlarımız
           </p>
           <h2 className="reveal font-cinzel font-bold uppercase text-white text-[26px] md:text-[38px] leading-tight tracking-[0.04em] mb-4">
             Spor Dallarımız
           </h2>
-          <div className="reveal w-14 h-0.5 bg-gradient-to-r from-gold to-transparent" />
+          <div className="reveal w-14 h-0.5 bg-gradient-to-r from-sky-light to-transparent" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/6">
-          {branches.map((b, i) => (
-            <div
-              key={b.title}
-              className={`reveal reveal-delay-${i + 1} group relative p-10
-                border-b md:border-b-0 md:border-r border-white/6 last:border-0
-                hover:bg-white/[0.03] transition-colors duration-300 cursor-default`}
-            >
-              {/* Top accent */}
-              <div className="absolute top-0 left-0 w-0 h-0.5 bg-gold group-hover:w-full transition-all duration-500" />
+        <p className="reveal font-worksans text-[11px] font-medium tracking-[0.1em] text-white/35 mb-8 md:mb-0">
+          Kartı sürükle, diğer branşları gör →
+        </p>
 
-              {/* Icon */}
-              <div className="text-gold/60 mb-8 group-hover:text-gold transition-colors duration-300">
-                {b.icon}
-              </div>
-
-              {/* Title */}
-              <h3 className="font-cinzel font-bold text-white text-base tracking-[0.06em] uppercase mb-3">
-                {b.title}
-              </h3>
-
-              {/* Desc */}
-              <p className="text-white/50 text-[13px] leading-relaxed mb-6">{b.desc}</p>
-
-              {/* Detail */}
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-px bg-gold/50" />
-                <span className="text-[11px] text-white/30 tracking-wide font-medium">{b.detail}</span>
-              </div>
-            </div>
+        <div className="reveal relative h-[340px] sm:h-[360px] w-[300px] sm:w-[320px] mx-auto md:mx-0 md:ml-12 mt-6">
+          {order.map((branchIndex, i) => (
+            <BranchCard
+              key={branches[branchIndex].title}
+              branch={branches[branchIndex]}
+              position={POSITIONS[i]}
+              handleShuffle={handleShuffle}
+            />
           ))}
         </div>
 
