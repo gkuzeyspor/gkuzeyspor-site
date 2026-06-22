@@ -1,6 +1,8 @@
 const CLUB_URL = "https://tffistanbul.org/kulup/gercek-kuzey-spor/1151";
 const OUR_CLUB_SLUG = "gercek-kuzey-spor";
 const TFF_ORIGIN = "https://tffistanbul.org";
+const MAX_TFF_RESPONSE_CHARACTERS = 2_000_000;
+const TFF_FETCH_TIMEOUT_MS = 10_000;
 
 // Scraping starts only once the season is underway. Before this date we
 // keep showing the static pre-season snapshot instead of hitting the
@@ -97,12 +99,23 @@ function toTitleCase(s: string): string {
 // uploaded crest fall back to an inline placeholder <svg> on their site;
 // we deliberately don't inject that markup (it's untrusted external HTML),
 // our own initials badge covers that case instead.
+export function normalizeTffCrestUrl(src: string): string | undefined {
+  try {
+    const url = new URL(src, TFF_ORIGIN);
+    if (url.protocol !== "https:" || url.hostname !== "tffistanbul.org") return undefined;
+    if (!url.pathname.startsWith("/images/") || !/\.(?:jpe?g|png|webp)$/i.test(url.pathname)) {
+      return undefined;
+    }
+    return url.href;
+  } catch {
+    return undefined;
+  }
+}
+
 function extractCrest(block: string): string | undefined {
   const img = block.match(/<img\s+src="([^"]+)"/);
   if (!img) return undefined;
-  const src = img[1].trim();
-  const absolute = src.startsWith("http") ? src : `${TFF_ORIGIN}${src.startsWith("/") ? "" : "/"}${src}`;
-  return encodeURI(absolute);
+  return normalizeTffCrestUrl(img[1].trim());
 }
 
 function parseHeader(html: string): { leagueLabel: string; weekLabel: string; groupLabel: string } {
@@ -219,9 +232,15 @@ export async function getLeagueData(): Promise<LeagueData> {
     const res = await fetch(CLUB_URL, {
       headers: { "User-Agent": "Mozilla/5.0 (compatible; GercekKuzeySK-Site/1.0)" },
       next: { revalidate: REVALIDATE_SECONDS },
+      signal: AbortSignal.timeout(TFF_FETCH_TIMEOUT_MS),
     });
     if (!res.ok) return FALLBACK;
+    const contentLength = Number(res.headers.get("content-length"));
+    if (Number.isFinite(contentLength) && contentLength > MAX_TFF_RESPONSE_CHARACTERS) {
+      return FALLBACK;
+    }
     const html = await res.text();
+    if (html.length > MAX_TFF_RESPONSE_CHARACTERS) return FALLBACK;
 
     const { leagueLabel, weekLabel, groupLabel } = parseHeader(html);
     const standings = parseStandings(html);

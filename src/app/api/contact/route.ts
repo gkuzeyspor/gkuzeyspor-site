@@ -1,26 +1,65 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import {
+  ContactRateLimiter,
+  ContactRequestError,
+  readJsonBody,
+  validateContactPayload,
+} from "@/lib/contact";
 
 const TO_EMAIL = "gkuzeyspor@hotmail.com";
+const MAX_BODY_BYTES = 8_192;
+const rateLimiter = new ContactRateLimiter({
+  limit: 5,
+  windowMs: 10 * 60 * 1_000,
+  maxEntries: 10_000,
+});
+
+function json(body: object, status = 200, headers?: HeadersInit) {
+  return NextResponse.json(body, {
+    status,
+    headers: { "Cache-Control": "no-store", ...headers },
+  });
+}
+
+function clientKey(req: NextRequest): string {
+  const forwarded = req.headers.get("x-forwarded-for")?.split(",", 1)[0].trim();
+  const realIp = req.headers.get("x-real-ip")?.trim();
+  const candidate = forwarded || realIp || "unknown";
+  return candidate.slice(0, 64);
+}
 
 export async function POST(req: NextRequest) {
+  const rateLimit = rateLimiter.check(clientKey(req));
+  if (!rateLimit.allowed) {
+    return json(
+      { error: "Çok fazla istek gönderdiniz. Lütfen daha sonra tekrar deneyin." },
+      429,
+      { "Retry-After": String(rateLimit.retryAfterSeconds) },
+    );
+  }
+
+  let body: unknown;
+  try {
+    body = await readJsonBody(req, MAX_BODY_BYTES);
+  } catch (error) {
+    if (error instanceof ContactRequestError) {
+      return json({ error: error.message }, error.status);
+    }
+    return json({ error: "Geçersiz istek." }, 400);
+  }
+
+  const validation = validateContactPayload(body);
+  if (!validation.ok) {
+    return json({ error: validation.error }, 400);
+  }
+
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    return NextResponse.json({ error: "Sunucu yapılandırması eksik." }, { status: 500 });
+    return json({ error: "Sunucu yapılandırması eksik." }, 500);
   }
 
-  const body = await req.json().catch(() => null);
-  const name = typeof body?.name === "string" ? body.name.trim() : "";
-  const email = typeof body?.email === "string" ? body.email.trim() : "";
-  const message = typeof body?.message === "string" ? body.message.trim() : "";
-
-  if (!name || !email || !message) {
-    return NextResponse.json({ error: "Tüm alanları doldurun." }, { status: 400 });
-  }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return NextResponse.json({ error: "Geçersiz e-posta adresi." }, { status: 400 });
-  }
-
+  const { name, email, message } = validation.data;
   const resend = new Resend(apiKey);
 
   try {
@@ -33,10 +72,10 @@ export async function POST(req: NextRequest) {
     });
 
     if (error) {
-      return NextResponse.json({ error: "Mail gönderilemedi." }, { status: 502 });
+      return json({ error: "Mail gönderilemedi." }, 502);
     }
-    return NextResponse.json({ ok: true });
+    return json({ ok: true });
   } catch {
-    return NextResponse.json({ error: "Mail gönderilemedi." }, { status: 502 });
+    return json({ error: "Mail gönderilemedi." }, 502);
   }
 }

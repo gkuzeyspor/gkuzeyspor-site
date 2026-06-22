@@ -91,44 +91,64 @@ export default function Iletisim() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20">
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="reveal space-y-5" noValidate>
+          <form onSubmit={handleSubmit} className="reveal space-y-5">
             <div>
-              <label className="block text-[10px] font-bold tracking-[0.3em] uppercase text-sky-light mb-2">
+              <label htmlFor="contact-name" className="block text-[10px] font-bold tracking-[0.3em] uppercase text-sky-light mb-2">
                 Ad Soyad
               </label>
               <input
+                id="contact-name"
                 type="text"
                 name="name"
                 placeholder="Adınızı ve soyadınızı girin"
                 required
+                minLength={2}
+                maxLength={100}
+                autoComplete="name"
                 disabled={status === "sending"}
                 className={inputClass}
               />
             </div>
             <div>
-              <label className="block text-[10px] font-bold tracking-[0.3em] uppercase text-sky-light mb-2">
+              <label htmlFor="contact-email" className="block text-[10px] font-bold tracking-[0.3em] uppercase text-sky-light mb-2">
                 E-Posta
               </label>
               <input
+                id="contact-email"
                 type="email"
                 name="email"
                 placeholder="ornek@mail.com"
                 required
+                maxLength={254}
+                autoComplete="email"
                 disabled={status === "sending"}
                 className={inputClass}
               />
             </div>
             <div>
-              <label className="block text-[10px] font-bold tracking-[0.3em] uppercase text-sky-light mb-2">
+              <label htmlFor="contact-message" className="block text-[10px] font-bold tracking-[0.3em] uppercase text-sky-light mb-2">
                 Mesaj
               </label>
               <textarea
+                id="contact-message"
                 rows={5}
                 name="message"
                 placeholder="Mesajınızı buraya yazın…"
                 required
+                minLength={10}
+                maxLength={5000}
                 disabled={status === "sending"}
                 className={inputClass + " resize-y"}
+              />
+            </div>
+            <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true">
+              <label htmlFor="contact-website">Web sitesi</label>
+              <input
+                id="contact-website"
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
               />
             </div>
             <button

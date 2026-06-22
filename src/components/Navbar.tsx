@@ -93,6 +93,23 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeOnEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [menuOpen]);
+
   const handleLink = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     setMenuOpen(false);
     if (!isHome) return; // let the browser navigate to "/" + hash normally
@@ -179,7 +196,12 @@ export default function Navbar() {
       </nav>
 
       {menuOpen && (
-        <div className="fixed inset-0 z-[60] bg-navy-deep/98 backdrop-blur-md flex flex-col items-center justify-center gap-10">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobil menü"
+          className="fixed inset-0 z-[60] overflow-y-auto bg-navy-deep/98 backdrop-blur-md flex flex-col items-center justify-start gap-8 px-6 py-20"
+        >
           <button
             className="absolute top-6 right-6 text-sky-light text-3xl leading-none"
             onClick={() => setMenuOpen(false)}
