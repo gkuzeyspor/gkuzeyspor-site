@@ -30,12 +30,12 @@ export default function EmegiGecenlerPage() {
         </h1>
         <div className="w-14 h-0.5 bg-gradient-to-r from-sky-light to-transparent mx-auto mb-12" />
 
-        <ul className="space-y-3">
+        <ul className="space-y-4">
           {staff.map((person) => (
             <li
               key={`${person.name}-${person.period}`}
-              className={`font-worksans text-[14px] leading-relaxed border px-5 py-4
-                ${person.active ? "border-sky-light/40 bg-sky-light/[0.05] text-white font-bold" : "border-white/8 bg-white/[0.02] text-white/70 font-medium"}`}
+              className={`font-worksans text-[14px] leading-relaxed border-l-2 pl-4
+                ${person.active ? "border-sky-light text-white font-bold" : "border-white/15 text-white/70 font-medium"}`}
             >
               {person.role} {person.name} — ({person.period})
             </li>
