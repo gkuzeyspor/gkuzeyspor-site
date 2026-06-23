@@ -41,8 +41,9 @@ const sportsClubJsonLd = {
   telephone: "+905054024610",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Çilekli Spor Tesisleri",
+    streetAddress: "Uğur Mumcu Cd. No:2, 4. Levent",
     addressLocality: "Beşiktaş",
+    postalCode: "34330",
     addressRegion: "İstanbul",
     addressCountry: "TR",
   },

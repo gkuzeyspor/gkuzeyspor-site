@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, FormEvent } from "react";
 import SmallCaps from "./SmallCaps";
 
 const contactInfo = [
-  { icon: "📍", label: "Adres",   value: "Beşiktaş, İstanbul" },
+  { icon: "📍", label: "Adres",   value: "Uğur Mumcu Cd. No:2, 4. Levent, 34330 Beşiktaş/İstanbul" },
   { icon: "📞", label: "Telefon", value: "+90 505 402 46 10 — Cenk Temelatan" },
   { icon: "📞", label: "Telefon", value: "+90 532 320 58 51 — Enes Umut Serhuş" },
   { icon: "📧", label: "E-Posta", value: "gkuzeyspor@hotmail.com" },
