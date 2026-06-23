@@ -168,7 +168,7 @@ export default function Iletisim() {
               {status === "sent" ? "Gönderildi ✓" : status === "sending" ? "Gönderiliyor…" : "Gönder"}
             </button>
             {status === "error" && (
-              <p className="font-worksans text-[12px] font-medium text-red-400">{errorMsg}</p>
+              <p role="alert" aria-live="polite" className="font-worksans text-[12px] font-medium text-red-400">{errorMsg}</p>
             )}
           </form>
 

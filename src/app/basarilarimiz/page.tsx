@@ -25,11 +25,11 @@ export default function BasarilarimizPage() {
         </h1>
         <div className="w-14 h-0.5 bg-gradient-to-r from-sky-light to-transparent mx-auto mb-12" />
 
-        <ul className="space-y-4">
+        <ul className="space-y-3">
           {achievements.map((item) => (
             <li
               key={item.period}
-              className="font-worksans text-[14px] leading-relaxed text-white/80 font-medium border-l-2 border-sky-light/40 pl-4"
+              className="font-worksans text-[14px] leading-relaxed text-white/80 font-medium border border-white/8 bg-white/[0.02] px-5 py-4"
             >
               {item.period} <span className="text-sky-light font-bold">{item.title} 🏆</span>
             </li>
