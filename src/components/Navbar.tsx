@@ -213,7 +213,7 @@ export default function Navbar() {
         </ul>
 
         <button
-          className="xl:hidden flex flex-col gap-1.5 p-1"
+          className="xl:hidden flex flex-col items-center justify-center gap-1.5 w-11 h-11 -m-1"
           onClick={() => setMenuOpen(true)}
           aria-label="Menüyü aç"
         >

@@ -1,6 +1,12 @@
 import Link from "next/link";
 import SmallCaps from "@/components/SmallCaps";
 
+export const metadata = {
+  title: "Yaş Kategorileri | Gerçek Kuzey Spor Kulübü",
+  description:
+    "Gerçek Kuzey Spor Kulübü U-11, U-12 ve U-13 yaş kategorileri ve doğum yılları.",
+};
+
 const categories = [
   { period: "2016 ve 2017 Doğumlular", title: "U-11" },
   { period: "2015 Doğumlular", title: "U-12" },

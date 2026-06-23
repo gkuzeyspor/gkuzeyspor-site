@@ -2,6 +2,11 @@ import Link from "next/link";
 import VideoLightbox from "@/components/VideoLightbox";
 import SmallCaps from "@/components/SmallCaps";
 
+export const metadata = {
+  title: "Video Galerisi | Gerçek Kuzey Spor Kulübü",
+  description: "Gerçek Kuzey Spor Kulübü tanıtım ve maç videoları.",
+};
+
 const videos = [
   { src: "/album/tanitim.mp4", caption: "Gerçek Kuzey Spor Kulübü" },
 ];

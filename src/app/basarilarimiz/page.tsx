@@ -1,6 +1,12 @@
 import Link from "next/link";
 import SmallCaps from "@/components/SmallCaps";
 
+export const metadata = {
+  title: "Başarılarımız | Gerçek Kuzey Spor Kulübü",
+  description:
+    "Gerçek Kuzey Spor Kulübü'nün yıllar içindeki lig şampiyonlukları ve başarıları.",
+};
+
 const achievements = [
   { period: "2013-2014", title: "U-14 Ligi Şampiyonu" },
   { period: "2015-2016", title: "U-16 Ligi Şampiyonu" },

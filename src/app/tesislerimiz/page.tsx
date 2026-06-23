@@ -2,6 +2,12 @@ import Link from "next/link";
 import PhotoLightbox from "@/components/PhotoLightbox";
 import SmallCaps from "@/components/SmallCaps";
 
+export const metadata = {
+  title: "Tesislerimiz | Gerçek Kuzey Spor Kulübü",
+  description:
+    "Gerçek Kuzey Spor Kulübü'nün antrenman tesisi: Beşiktaş Çilekli Spor Tesisleri'nden fotoğraflar.",
+};
+
 const photos = [
   { src: "/tesislerimiz/cilekli-stad%C4%B1.jpg", alt: "Beşiktaş Çilekli Spor Tesisleri", width: 619, height: 413 },
   { src: "/tesislerimiz/1024px_cileklistadium_3.jpg", alt: "Beşiktaş Çilekli Spor Tesisleri saha görünümü", width: 1024, height: 674 },

@@ -1,6 +1,12 @@
 import Link from "next/link";
 import SmallCaps from "@/components/SmallCaps";
 
+export const metadata = {
+  title: "Emeği Geçenler | Gerçek Kuzey Spor Kulübü",
+  description:
+    "Gerçek Kuzey Spor Kulübü'ne teknik direktörlük ve antrenörlük yapan, emeği geçen isimler.",
+};
+
 const staff = [
   { role: "Teknik Direktör", name: "Caner KAYA", period: "2011", active: false },
   { role: "Teknik Direktör", name: "Süleyman AKGÜL", period: "2011-2012", active: false },

@@ -1,5 +1,10 @@
 import PlaceholderPage from "@/components/PlaceholderPage";
 
+export const metadata = {
+  title: "Maç Programı | Gerçek Kuzey Spor Kulübü",
+  description: "Gerçek Kuzey Spor Kulübü maç takvimi.",
+};
+
 export default function MacPage() {
   return (
     <PlaceholderPage

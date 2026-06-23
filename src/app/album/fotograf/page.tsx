@@ -2,6 +2,11 @@ import Link from "next/link";
 import PhotoLightbox from "@/components/PhotoLightbox";
 import SmallCaps from "@/components/SmallCaps";
 
+export const metadata = {
+  title: "Fotoğraf Galerisi | Gerçek Kuzey Spor Kulübü",
+  description: "Gerçek Kuzey Spor Kulübü'nden antrenman ve maç fotoğrafları.",
+};
+
 const photos = [
   { src: "/album/fotograf/foto-1.jpeg", alt: "Gerçek Kuzey Spor Kulübü", width: 3551, height: 2154 },
   { src: "/album/fotograf/foto-2.jpeg", alt: "Gerçek Kuzey Spor Kulübü", width: 4032, height: 3024 },
